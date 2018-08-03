@@ -13,9 +13,9 @@ App available at
 4. [Workspace](#4-workspace)
 5. [Workflow](#5-workflow)
 6. [UXD](#6-uxd)
-7. [Heroku Deployment](#7-heroku-deployment)
-8. [Database Schema](#8-database-schema)
-9. [Wireframes](#9-wireframes)
+7. [Database Schema](#7-database-schema)
+8. [Wireframes](#8-wireframes)
+9. [Heroku Deployment](#9-heroku-deployment)
 10. [Features](#10-features)
 11. [Testing](#11-testing)
 12. [How To Deploy Locally](#12-how-to-deploy-locally)
@@ -46,8 +46,9 @@ App available at
 
 - [HTML5](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5)
 - [CSS3](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS3)
-- [Bootstrap v4.1.1](https://getbootstrap.com/docs/4.1/)
+- [JavaScript](https://developer.mozilla.org/bm/docs/Web/JavaScript)
 - [jQuery v3.3.1](https://jquery.com)
+- [Bootstrap v4.1.1](https://getbootstrap.com/docs/4.1/)
 
 **Version Control**
 
@@ -72,10 +73,10 @@ App available at
 
 - Create project directory with readme
 - Create git repo
-- Work on UXD up to and including the Structure plane
+- Work on UXD up to and including the Scope plane
 - Create database schema
 - Create MongoDB database on mLab
-- Work on Skeleton plane of UXD
+- Work on Structure and Skeleton planes of UXD
 - Create wireframes
 - Get Flask app up and running
     - Install flask
@@ -91,65 +92,118 @@ App available at
 
 ### Strategy
 
-| Focus                                                       | User Needs                                                            | Business Objectives                             |
-|-------------------------------------------------------------|-----------------------------------------------------------------------|-------------------------------------------------|
-| What are you aiming to achieve?                             |  |  |
-|                                                             |  |  |
-| For whom?                                                   |  |  |
-| TARGET AUDIENCE                                             |  |  |
-|                                                             |  |  |
-|                                                             |  |  |
-|                                                             |  |  |
-|                                                             |  |  |
+| Focus                                | User Needs                                                            | Business Objectives                             |
+|--------------------------------------|-----------------------------------------------------------------------|-------------------------------------------------|
+| What are you aiming to achieve?      | I want to store and access cooking recipes |  |
+|                                      | I want to find recipes for a particular cuisine, ingredient, country |  |
+| For whom?                            | I want to see the most popular recipes |  |
+| TARGET AUDIENCE                      | I want to add a new recipe |  |
+|                                      | I want to view existing recipes |  |
+|                                      | I want to edit a recipe |  |
+|                                      | I want to remove an old recipe |  |
+|                                      | I want to create an account to keep track of my recipes and favourites |  |
 
 ### Scope
 
-| Focus                                                       | Functional Specification                                              | Content Requirements                            |
-|-------------------------------------------------------------|-----------------------------------------------------------------------|-------------------------------------------------|
-| Which features?                                             |  |  |
-| What’s on the table?                                        |  |  |
-|                                                             |  |  |
-|                                                             |  |  |
-|                                                             |  |  |
-|                                                             |  |  |
-|                                                             |  |  |
-|                                                             |  |  |
+| Focus                                | Functional Specification                                              | Content Requirements                            |
+|--------------------------------------|-----------------------------------------------------------------------|-------------------------------------------------|
+| Which features?                      | View all recipes ordered by number of favourites                      | [See database schema](#7-database-schema) |
+| What’s on the table?                 | View all recipes using filters                                        |  |
+|                                      | Add a new recipe                                                      |  |
+|                                      | View a recipe                                                         |  |
+|                                      | Edit a recipe                                                         |  |
+|                                      | Delete a recipe                                                       |  |
+|                                      | Create an account                                                     |  |
+|                                      | Log in/out                                                            |  |
+|                                      | Sign up                                                               |  |
+|                                      | View a user profile page                                              |  |
+|                                      | Favourite a recipe                                                    |  |
+|                                      | Unfavourite a recipe                                                  |  |
+
 
 ### Structure
 
-| Focus                                                       | Interaction Design                                                           | Information Architecture                                                               |
-|-------------------------------------------------------------|------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
-| How is the information structured?                          | Where am I? / How did I get here? / What can I do here? / Where can I go?    | Organizational / Navigational schemas (tree / nested list / hub and spoke / dashboard) |
-|                                                             |  |  |
-| How is it logically grouped?                                |  |  |
-|                                                             |  |  |
-|                                                             |  |  |
-|                                                             |  |  |
-|                                                             |  |  |
+| Focus                                | Interaction Design                                                        | Information Architecture                                                               |
+|--------------------------------------|---------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
+| How is the information structured?   | Where am I? / How did I get here? / What can I do here? / Where can I go? | Organizational/Navigational schema (tree/nested list/hub and spoke/dashboard) |
+|                                      | Favourite a recipe by clicking heart icon, prompt to log in if not        |  |
+| How is it logically grouped?         | Log in by entering username in a form                                     |  |
+|                                      | If you don't have a username, prompt to sign up                           |  |
+|                                      | Sign up by registering a unique username in a form                        |  |
+|                                      | Click on user icon to view profile page                                   |  |
+|                                      | Add and remove filters to alter recipe list displayed                     |  |
+|                                      | Use pagination to view recipe list                                        |  |
+|                                      | Click on a recipe to view it in full                                      |  |
+|                                      | Scroll through recipe page to view recipe content                         |  |
+|                                      | Click on Manage Recipes to go to User Profile (CRUD recipes from here)    |  |
+|                                      | Unfavourite a recipe by clicking the heart icon                           |  |
+|                                      | Log out by clicking the log out icon                                      |  |
 
 ### Skeleton
 
-| Focus                                                       | Interface Design                                       | Navigational Design  | Information Design  |
-|-------------------------------------------------------------|--------------------------------------------------------|----------------------|---------------------|
-| How will the information be represented?                    | See wireframes                                         |                      |                     |
-|                                                             |  |  |  |
-| How will the user navigate to the information and features? |  |  |  |
-|                                                             |  |  |  |
-|                                                             |  |  |  |
-|                                                             |  |  |  |
-|                                                             |  |  |  |
+| Focus                                      | Interface Design                                       | Navigational Design  | Information Design  |
+|--------------------------------------------|--------------------------------------------------------|----------------------|---------------------|
+| How will the information be represented?   | See wireframes                                         |                      |                     |
+|                                            |  |  |  |
+| How will the user navigate                 |  |  |  |
+| to the information and features?           |  |  |  |
+|                                            |  |  |  |
+|                                            |  |  |  |
+|                                            |  |  |  |
 
 ### Surface
 
-| Focus                                                       | Visual Design                       |
-|-------------------------------------------------------------|-------------------------------------|
-| What will the finished product look like?                   |  |
-|                                                             |  |
-| What colours, typography and design elements will be used?  |  |
-|                                                             |  |
-|                                                             |  |
+| Focus                                      | Visual Design                       |
+|--------------------------------------------|-------------------------------------|
+| What will the finished product look like?  |  |
+|                                            |  |
+| What colours, typography and               |  |
+| design elements will be used?              |  |
+|                                            |  |
 
-## 7 Heroku Deployment
+
+## 7 Database Schema
+
+**Recipe**
+
+```javascript
+    {
+        name: '',
+        time: {
+            prep: '',
+            cook: ''
+        },
+        author: UserId,
+        description: '',
+        ingredients: [],
+        method: [],
+        image_url: '',
+        date_added: Date,
+        favourites: Number,
+        country_of_origin: '',
+        cuisine: ''
+    }
+```
+
+**User**
+
+```javascript
+    {
+        name: '',
+        username: '',
+        my_recipes: [RecipeId],
+        favourite_recipes: [RecipeId]
+    }
+```
+
+
+## 8 Wireframes
+
+<!--
+![Wireframes](https://raw.githubusercontent.com/sarahloh/p3-riddle-game/master/static/images/readme/wireframes.jpg)-->
+
+
+## 9 Heroku Deployment
 
 This section should describe the process you went through to deploy the project to a hosting platform (e.g. GitHub Pages or Heroku).
 
@@ -183,14 +237,6 @@ In particular, you should provide all details of the differences between the dep
 
 8. Setup config variables on heroku dashboard -->
 
-
-## 8 Database Schema
-
-
-## 9 Wireframes
-
-<!--
-![Wireframes](https://raw.githubusercontent.com/sarahloh/p3-riddle-game/master/static/images/readme/wireframes.jpg)-->
 
 
 ## 10 Features
