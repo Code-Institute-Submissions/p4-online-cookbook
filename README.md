@@ -126,13 +126,13 @@ App available at
 | Focus                                | Interaction Design                                                        | Information Architecture                                                               |
 |--------------------------------------|---------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
 | How is the information structured?   | Where am I? / How did I get here? / What can I do here? / Where can I go? | Organizational/Navigational schema (tree/nested list/hub and spoke/dashboard) |
-|                                      | Favourite a recipe by clicking heart icon, prompt to log in if not        |  |
-| How is it logically grouped?         | Log in by entering username in a form                                     |  |
-|                                      | If you don't have a username, prompt to sign up                           |  |
-|                                      | Sign up by registering a unique username in a form                        |  |
-|                                      | Click on user icon to view profile page                                   |  |
-|                                      | Add and remove filters to alter recipe list displayed                     |  |
-|                                      | Use pagination to view recipe list                                        |  |
+|                                      | Favourite a recipe by clicking heart icon, prompt to log in if not        | Tree structure |
+| How is it logically grouped?         | Log in by entering username in a form                                     | Home |
+|                                      | If you don't have a username, prompt to sign up                           | Recipe |
+|                                      | Sign up by registering a unique username in a form                        | Manage Recipes |
+|                                      | Click on user icon to view profile page                                   | - Add Recipe |
+|                                      | Add and remove filters to alter recipe list displayed                     | - Edit Recipe |
+|                                      | Use pagination to view recipe list                                        | Log In/Sign Up |
 |                                      | Click on a recipe to view it in full                                      |  |
 |                                      | Scroll through recipe page to view recipe content                         |  |
 |                                      | Click on Manage Recipes to go to User Profile (CRUD recipes from here)    |  |
@@ -167,33 +167,35 @@ App available at
 **Recipe**
 
 ```javascript
-    {
-        name: '',
-        time: {
-            prep: '',
-            cook: ''
-        },
-        author: UserId,
-        description: '',
-        ingredients: [],
-        method: [],
-        image_url: '',
-        date_added: Date,
-        favourites: Number,
-        country_of_origin: '',
-        cuisine: ''
-    }
+{
+    name: '',
+    time: {
+        prep: '',
+        cook: ''
+    },
+    author: UserId,
+    description: '',
+    ingredients: [''],
+    method: [''],
+    image_url: '',
+    date_added: Date,
+    favourites: Number,
+    country_of_origin: '',
+    cuisine: '',
+    type: '',
+    tags: ['']
+}
 ```
 
 **User**
 
 ```javascript
-    {
-        name: '',
-        username: '',
-        my_recipes: [RecipeId],
-        favourite_recipes: [RecipeId]
-    }
+{
+    name: '',
+    username: '',
+    my_recipes: [RecipeId],
+    favourite_recipes: [RecipeId]
+}
 ```
 
 
