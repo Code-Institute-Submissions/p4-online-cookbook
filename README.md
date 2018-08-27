@@ -202,6 +202,8 @@ App available at
 
 ![Mobile Wireframes](https://raw.githubusercontent.com/sarahloh/p4-online-cookbook/master/static/images/readme/mobile_wireframes.jpg)
 
+![Tablet Wireframes](https://raw.githubusercontent.com/sarahloh/p4-online-cookbook/master/static/images/readme/tablet_wireframes.jpg)
+
 
 ## 9 Heroku Deployment
 
