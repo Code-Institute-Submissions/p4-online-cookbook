@@ -47,7 +47,6 @@ App available at
 - [HTML5](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5)
 - [CSS3](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS3)
 - [JavaScript](https://developer.mozilla.org/bm/docs/Web/JavaScript)
-- [jQuery v3.3.1](https://jquery.com)
 - [Bootstrap v4.1.1](https://getbootstrap.com/docs/4.1/)
 
 **Version Control**
@@ -130,12 +129,12 @@ App available at
 | How is it logically grouped?         | Log in by entering username in a form                                     | Home |
 |                                      | If you don't have a username, prompt to sign up                           | Recipe |
 |                                      | Sign up by registering a unique username in a form                        | Manage Recipes |
-|                                      | Click on user icon to view profile page                                   | - Add Recipe |
+|                                      | Click on Manage Recipes to view user profile page                         | - Add Recipe |
 |                                      | Add and remove filters to alter recipe list displayed                     | - Edit Recipe |
 |                                      | Use pagination to view recipe list                                        | Log In/Sign Up |
 |                                      | Click on a recipe to view it in full                                      |  |
 |                                      | Scroll through recipe page to view recipe content                         |  |
-|                                      | Click on Manage Recipes to go to User Profile (CRUD recipes from here)    |  |
+|                                      | Update and delete recipes from by clicking on icons on Manage Recipes     |  |
 |                                      | Unfavourite a recipe by clicking the heart icon                           |  |
 |                                      | Log out by clicking the log out icon                                      |  |
 
@@ -144,12 +143,12 @@ App available at
 | Focus                                      | Interface Design                                       | Navigational Design  | Information Design  |
 |--------------------------------------------|--------------------------------------------------------|----------------------|---------------------|
 | How will the information be represented?   | See wireframes                                         |                      |                     |
-|                                            |  |  |  |
-| How will the user navigate                 |  |  |  |
-| to the information and features?           |  |  |  |
-|                                            |  |  |  |
-|                                            |  |  |  |
-|                                            |  |  |  |
+|                                            |                                                        | All Recipes          |  |
+| How will the user navigate                 |                                                        | Manage Recipes       |  |
+| to the information and features?           |                                                        | Add Recipe           |  |
+|                                            |                                                        | Most Popular         |  |
+|                                            |                                                        | (Log In / Log Out)   |  |
+|                                            |                                                        |  |  |
 
 ### Surface
 
@@ -201,8 +200,7 @@ App available at
 
 ## 8 Wireframes
 
-<!--
-![Wireframes](https://raw.githubusercontent.com/sarahloh/p3-riddle-game/master/static/images/readme/wireframes.jpg)-->
+![Mobile Wireframes](https://raw.githubusercontent.com/sarahloh/p4-online-cookbook/master/static/images/readme/mobile_wireframes.jpg)
 
 
 ## 9 Heroku Deployment
