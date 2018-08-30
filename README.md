@@ -169,8 +169,8 @@ App available at
 {
     name: '',
     time: {
-        prep: '',
-        cook: ''
+        hours: Number,
+        minutes: Number
     },
     author: UserId,
     description: '',
@@ -181,8 +181,7 @@ App available at
     favourites: Number,
     country_of_origin: '',
     cuisine: '',
-    type: '',
-    tags: ['']
+    type: ''
 }
 ```
 
@@ -196,7 +195,6 @@ App available at
     favourite_recipes: [RecipeId]
 }
 ```
-
 
 ## 8 Wireframes
 
