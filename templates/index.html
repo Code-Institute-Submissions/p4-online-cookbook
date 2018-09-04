@@ -1,0 +1,11 @@
+{% extends 'base.html' %} {% block content %}
+
+<ul>
+    {% for recipe in recipes %}
+    <li>
+        {{recipe}}
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
