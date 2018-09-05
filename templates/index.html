@@ -3,7 +3,12 @@
 <ul>
     {% for recipe in recipes %}
     <li>
-        {{recipe}}
+        <div class="recipe-card">
+            <h3>{{recipe.name}}</h3>
+            <p>Cuisine: {{recipe.cuisine}}</p>
+            <p>Type: {{recipe.type}}</p>
+            <img src="{{recipe.image_url}}" alt="recipe image" width="200">
+        </div>
     </li>
     {% endfor %}
 </ul>
