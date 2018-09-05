@@ -11,12 +11,18 @@ mongo = PyMongo(app)
 
 
 @app.route('/')
-@app.route('/get_recipes')
-def get_recipes():
+def index():
     """
     Display the recipes colection on index.html
     """
-    return render_template("index.html", recipes=mongo.db.recipes.find())
+    return render_template("index.html", recipes=get_recipes())
+
+
+def get_recipes():
+    """
+    Read all recipes fromthe database and return a list sorted by favourites in descending order
+    """
+    return mongo.db.recipes.find().sort('favourites', -1)
 
 
 if __name__ == '__main__':
