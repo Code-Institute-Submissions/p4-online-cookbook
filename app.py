@@ -24,6 +24,16 @@ def get_recipes():
     """
     return mongo.db.recipes.find().sort('favourites', -1)
 
+def get_recipes_by_filters(filters):
+    """
+    Read recipes from the database based on filters
+    """
+    if filters['type'] == '':
+        return mongo.db.recipes.find({ 'cuisine': filters['cuisine'] })
+    elif filters['cuisine'] == '':
+        return mongo.db.recipes.find({'type': filters['type']})
+    else:
+        return mongo.db.recipes.find({'type': filters['type'], 'cuisine': filters['cuisine']})
 
 if __name__ == '__main__':
     app.run(host=os.getenv('IP'),
