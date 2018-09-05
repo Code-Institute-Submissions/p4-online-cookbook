@@ -179,7 +179,6 @@ App available at
     image_url: '',
     date_added: Date,
     favourites: Number,
-    country_of_origin: '',
     cuisine: '',
     type: ''
 }
