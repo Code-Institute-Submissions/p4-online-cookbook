@@ -5,10 +5,17 @@
     <li>
         <div class="recipe-card">
             <h3>{{recipe.name}}</h3>
+            <img src="{{recipe.image_url}}" alt="recipe image" width="200">
+            <p>Id: {{recipe._id}}</p>
+            <p>Time: {{recipe.time}}</p>
+            <p>Author: {{recipe.author}}</p>
+            <p>Description: {{recipe.description}}</p>
+            <p>Ingredients: {{recipe.ingredients}}</p>
+            <p>Method: {{recipe.method}}</p>
+            <p>Date Added: {{recipe.date_added}}</p>
+            <p>Favourites: {{recipe.favourites}}</p>
             <p>Cuisine: {{recipe.cuisine}}</p>
             <p>Type: {{recipe.type}}</p>
-            <p>Favourites: {{recipe.favourites}}</p>
-            <img src="{{recipe.image_url}}" alt="recipe image" width="200">
         </div>
     </li>
     {% endfor %}
