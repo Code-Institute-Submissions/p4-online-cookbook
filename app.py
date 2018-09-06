@@ -48,6 +48,13 @@ def get_recipe_by_id(recipe_id):
     """
     return mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)})
 
+def update_recipe(recipe):
+    """
+    Update recipe in the datebase
+    """
+    mongo.db.recipes.replace_one({'_id': recipe['_id']}, recipe)
+
+
 
 if __name__ == '__main__':
     app.run(host=os.getenv('IP'),
