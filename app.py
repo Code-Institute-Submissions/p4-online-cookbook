@@ -69,6 +69,13 @@ def delete_recipe(recipe_id):
         print('Recipe with id %s was not deleted' % recipe_id)
 
 
+def get_users():
+    """
+    Read all users from the database
+    """
+    return mongo.db.users.find()
+
+
 if __name__ == '__main__':
     app.run(host=os.getenv('IP'),
             port=os.getenv('PORT'),

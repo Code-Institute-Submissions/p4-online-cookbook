@@ -4,6 +4,8 @@ Test suite for Online Cookbook
 
 import unittest
 import app
+from bson.objectid import ObjectId
+
 
 class TestCookbook(unittest.TestCase):
 
@@ -18,14 +20,16 @@ class TestCookbook(unittest.TestCase):
         """
         Test to ensure we can read subset of recipes based on type and cuisine filters
         """
-        american_recipes = list(app.get_recipes_by_filters({'type':'','cuisine':'American'}))
-        self.assertTrue(recipe['cuisine'] == 'american' for recipe in american_recipes)
+        american_recipes = list(app.get_recipes_by_filters(
+            {'type': '', 'cuisine': 'American'}))
+        self.assertTrue(recipe['cuisine'] ==
+                        'american' for recipe in american_recipes)
         starter_recipes = list(app.get_recipes_by_filters(
             {'type': 'starter', 'cuisine': ''}))
         self.assertTrue(recipe['type'] ==
                         'starter' for recipe in starter_recipes)
         french_dessert_recipes = list(app.get_recipes_by_filters(
-                {'type': 'dessert', 'cuisine': 'french'}))
+            {'type': 'dessert', 'cuisine': 'french'}))
         self.assertTrue(recipe['type'] ==
                         'dessert' and recipe['cuisine'] == 'french' for recipe in french_dessert_recipes)
 
@@ -34,6 +38,7 @@ class TestCookbook(unittest.TestCase):
         Test to ensure we can add a recipe to the database
         """
         new_recipe = {
+            "_id": ObjectId("000000000000000000000001"),
             "name": "Traditional Victoria sponge",
             "time": {
                 "hours": 1,
@@ -74,7 +79,8 @@ class TestCookbook(unittest.TestCase):
         Test to ensure we can get a recipe from the database by its id
         """
         recipe_id = '5b91483146073f953359fce8'
-        self.assertEqual(app.get_recipe_by_id(recipe_id)['name'], 'Cinnamon Chocolate Soufflé')
+        self.assertEqual(app.get_recipe_by_id(recipe_id)[
+                         'name'], 'Cinnamon Chocolate Soufflé')
 
     def test_update_recipe(self):
         """
@@ -83,12 +89,22 @@ class TestCookbook(unittest.TestCase):
         recipe = app.get_recipe_by_id('5b91483146073f953359fce8')
         recipe['favourites'] = 289
         app.update_recipe(recipe)
-        self.assertEqual(app.get_recipe_by_id(recipe['_id'])['favourites'], 289)
+        self.assertEqual(app.get_recipe_by_id(
+            recipe['_id'])['favourites'], 289)
 
     def test_delete_recipe(self):
         """
         Test to ensure we can remove a recipe from the database
         """
-        recipe_id = '5b648d93fb6fc072a40f6d8f'
+        recipe_id = '000000000000000000000001'
         app.delete_recipe(recipe_id)
-        self.assertNotIn(app.get_recipe_by_id(recipe_id), list(app.get_recipes()))
+        self.assertNotIn(app.get_recipe_by_id(
+            recipe_id), list(app.get_recipes()))
+
+    def test_get_users(self):
+        """
+        Test to ensure we can read users from the database
+        """
+        self.assertTrue(len(list(app.get_users())) > 0)
+
+
