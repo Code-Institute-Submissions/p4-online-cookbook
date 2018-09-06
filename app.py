@@ -25,16 +25,18 @@ def get_recipes():
     """
     return mongo.db.recipes.find().sort('favourites', -1)
 
+
 def get_recipes_by_filters(filters):
     """
     Read recipes from the database based on filters
     """
     if filters['type'] == '':
-        return mongo.db.recipes.find({ 'cuisine': filters['cuisine'] })
+        return mongo.db.recipes.find({'cuisine': filters['cuisine']})
     elif filters['cuisine'] == '':
         return mongo.db.recipes.find({'type': filters['type']})
     else:
         return mongo.db.recipes.find({'type': filters['type'], 'cuisine': filters['cuisine']})
+
 
 def add_recipe(recipe):
     """
@@ -42,11 +44,13 @@ def add_recipe(recipe):
     """
     mongo.db.recipes.insert_one(recipe)
 
+
 def get_recipe_by_id(recipe_id):
     """
     Get recipe from the database based on its id
     """
     return mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)})
+
 
 def update_recipe(recipe):
     """
@@ -54,6 +58,15 @@ def update_recipe(recipe):
     """
     mongo.db.recipes.replace_one({'_id': recipe['_id']}, recipe)
 
+
+def delete_recipe(recipe_id):
+    """
+    Remove a recipe from the database based on its id
+    """
+    try:
+        mongo.db.recipes.delete_one({'_id': ObjectId(recipe_id)})
+    except:
+        print('Recipe with id %s was not deleted' % recipe_id)
 
 
 if __name__ == '__main__':
