@@ -35,6 +35,13 @@ def get_recipes_by_filters(filters):
     else:
         return mongo.db.recipes.find({'type': filters['type'], 'cuisine': filters['cuisine']})
 
+def add_recipe(recipe):
+    """
+    Add new recipe to the database
+    """
+    mongo.db.recipes.insert_one(recipe)
+
+
 if __name__ == '__main__':
     app.run(host=os.getenv('IP'),
             port=os.getenv('PORT'),
