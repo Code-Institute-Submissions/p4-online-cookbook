@@ -68,3 +68,12 @@ class TestCookbook(unittest.TestCase):
         }
         app.add_recipe(new_recipe)
         self.assertTrue(new_recipe in list(app.get_recipes()))
+
+    def test_get_recipe_by_id(self):
+        """
+        Test to ensure we can get a recipe from the database by its id
+        """
+        recipe_id = '5b8fc23a59d1979fc3608b05'
+        self.assertEqual(app.get_recipe_by_id(recipe_id)[
+                         'name'], 'Cinnamon Chocolate Soufflé')
+

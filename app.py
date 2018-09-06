@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template, redirect, request, url_for
 from flask_pymongo import PyMongo
+from bson.objectid import ObjectId
 
 app = Flask(__name__)
 
@@ -40,6 +41,12 @@ def add_recipe(recipe):
     Add new recipe to the database
     """
     mongo.db.recipes.insert_one(recipe)
+
+def get_recipe_by_id(recipe_id):
+    """
+    Get recipe from the database based on its id
+    """
+    return mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)})
 
 
 if __name__ == '__main__':
