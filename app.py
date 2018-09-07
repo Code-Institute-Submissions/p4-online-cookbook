@@ -76,6 +76,20 @@ def get_users():
     return mongo.db.users.find()
 
 
+def add_user(user):
+    """
+    Add new user to the database
+    """
+    mongo.db.users.insert_one(user)
+
+
+def delete_user(user_id):
+    """
+    Remove user from the database
+    """
+    mongo.db.users.delete_one({'_id': ObjectId(user_id)})
+
+
 if __name__ == '__main__':
     app.run(host=os.getenv('IP'),
             port=os.getenv('PORT'),

@@ -107,4 +107,18 @@ class TestCookbook(unittest.TestCase):
         """
         self.assertTrue(len(list(app.get_users())) > 0)
 
+    def test_create_user(self):
+        """
+        Test to ensure we can add a user to the database
+        """
+        new_user = {
+            "_id": ObjectId("000000000000000000000002"),
+            "name": "Polly O'Donovan",
+            "username": "pollypocket",
+            "my_recipes": [],
+            "favourite_recipes": []
+        }
+        app.add_user(new_user)
+        self.assertIn(new_user, list(app.get_users()))
+        app.delete_user('000000000000000000000002')
 
