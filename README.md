@@ -59,8 +59,6 @@ App available at
 
 **Operating System** - [macOS High Sierra](https://en.wikipedia.org/wiki/MacOS_High_Sierra)
 
-**Package Manager** - [Homebrew](https://brew.sh)
-
 **Editor** - [Visual Studio Code](https://code.visualstudio.com)
 
 **Language** - [Python3](https://www.python.org)
@@ -206,21 +204,13 @@ App available at
 
 ## 9 Heroku Deployment
 
-This section should describe the process you went through to deploy the project to a hosting platform (e.g. GitHub Pages or Heroku).
+1. Create a new app 'sl-online-cookbook' on heroku.com
 
-In particular, you should provide all details of the differences between the deployed version and the development version, if any, including:
-- Different values for environment variables (Heroku Config Vars)?
-- Different configuration files?
-- Separate git branch?
-
-
-<!-- 1. Create a new app 'online-cookbook' on heroku.com
-
-2. Login to heroku with email abd password
+2. Login to heroku with email and password
     - $ heroku login
 
 3. Add heroku remote
-    - $ heroku git:remote -a online-cookbook
+    - $ heroku git:remote -a sl-online-cookbook
 
 4. Add requirements.txt
     - $ sudo pip3 freeze --local > requirements.txt
@@ -230,19 +220,19 @@ In particular, you should provide all details of the differences between the dep
 
 6. Git commit and push to heroku remote
     - $ git add Procfile
-    - $ git ci -m 'Add Profile and requirements.txt for heroku deployment'
+    - $ git ci -m 'Add requirements.txt and Procfile'
     - $ git push -u heroku master
 
 7. Set up dynos
     - $ heroku ps:scale web=1
 
-8. Setup config variables on heroku dashboard -->
+8. Setup config variables on heroku dashboard
 
 
 
 ## 10 Features
 
-In this section, you should go over the different parts of your project, and describe each in a sentence or so.
+<!-- In this section, you should go over the different parts of your project, and describe each in a sentence or so.
 
 ### Existing Features
 
@@ -254,16 +244,32 @@ For some/all of your features, you may choose to reference the specific project 
 In addition, you may also use this section to discuss plans for additional features to be implemented in the future:
 
 ### Features Left to Implement
-- Another feature idea
+- Another feature idea -->
 
 
 ## 11 Testing
 
-In this section, you need to convince the assessor that you have conducted enough testing to legitimately believe that the site works well. Essentially, in this part you will want to go over all of your user stories from the UX section and ensure that they all work as intended, with the project providing an easy and straightforward way for the users to achieve their goals.
+<!-- In this section, you need to convince the assessor that you have conducted enough testing to legitimately believe that the site works well. Essentially, in this part you will want to go over all of your user stories from the UX section and ensure that they all work as intended, with the project providing an easy and straightforward way for the users to achieve their goals.
 
-Whenever it is feasible, prefer to automate your tests, and if you've done so, provide a brief explanation of your approach, link to the test file(s) and explain how to run them.
+Whenever it is feasible, prefer to automate your tests, and if you've done so, provide a brief explanation of your approach, link to the test file(s) and explain how to run them. -->
 
-For any scenarios that have not been automated, test the user stories manually and provide as much detail as is relevant. A particularly useful form for describing your testing process is via scenarios, such as:
+---
+
+**Automated Tests**
+
+I used the Test Before approach of Test-Driven Development in this project, writing a test that fails, and then writing the code to pass the test using Python's unittest class.
+
+[Test file available here](https://github.com/sarahloh/p4-online-cookbook/blob/master/test_cookbook.py)
+
+To run the file use the follwing terminal command:
+
+```bash
+python3 -m unittest test_cookbook.py
+```
+
+---
+
+<!-- For any scenarios that have not been automated, test the user stories manually and provide as much detail as is relevant. A particularly useful form for describing your testing process is via scenarios, such as:
 
 1. Contact form:
     1. Go to the "Contact Us" page
@@ -275,7 +281,7 @@ In addition, you should mention in this section how your project looks and works
 
 You should also mention in this section any interesting bugs or problems you discovered during your testing, even if you haven't addressed them yet.
 
-If this section grows too long, you may want to split it off into a separate file and link to it from here.
+If this section grows too long, you may want to split it off into a separate file and link to it from here. -->
 
 ---
 
