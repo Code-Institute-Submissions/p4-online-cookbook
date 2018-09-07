@@ -135,7 +135,8 @@ class TestCookbook(unittest.TestCase):
         """
         username = "sarahloh"
         user_id = "5b648d93fb6fc072a40f6d8f"
-        self.assertEqual(app.get_user_by_username(username)['_id'], ObjectId(user_id))
+        self.assertEqual(app.get_user_by_username(
+            username)['_id'], ObjectId(user_id))
 
     def test_get_user_recipes(self):
         """
@@ -152,3 +153,29 @@ class TestCookbook(unittest.TestCase):
         user_id = "5b648d93fb6fc072a40f6d8f"
         self.assertIn(app.get_recipe('5b91483146073f953359fce8'),
                       app.get_user_favourites(user_id))
+
+    def test_remove_user_recipe(self):
+        """
+        Test to ensure we can remove a recipe id from a user document
+        """
+        user_id = "5b648d93fb6fc072a40f6d8f"
+        recipe_id = "5b8fc23a59d1979fc3608b0a"
+        app.remove_user_recipe_from_list(user_id, 'my_recipes', recipe_id)
+        self.assertNotIn(recipe_id, list(app.get_user_recipes(user_id)))
+
+        # re-add recipe after test
+        app.add_user_recipe_to_list(user_id, 'my_recipes', recipe_id)
+
+    def test_add_user_recipe(self):
+        """
+        Test to ensure we can add a recipe id to a user's list of recipes
+        """
+        user_id = "5b648d93fb6fc072a40f6d8f"
+        recipe_id = "5b8fc23a59d1979fc3608b0a"
+
+        # remove recipe before test
+        app.remove_user_recipe_from_list(user_id, 'my_recipes', recipe_id)
+
+        app.add_user_recipe_to_list(user_id, 'my_recipes', recipe_id)
+        self.assertIn(app.get_recipe(recipe_id),
+                      list(app.get_user_recipes(user_id)))

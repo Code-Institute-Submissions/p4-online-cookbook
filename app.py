@@ -115,8 +115,32 @@ def get_user_favourites(user_id):
     """
     Get user's favourite recipes from the database
     """
-    favourite_ids = list(mongo.db.users.find_one({"_id": ObjectId(user_id)},{"_id":0, "name":0, "username":0, "my_recipes":0})['favourite_recipes'])
+    favourite_ids = list(mongo.db.users.find_one({"_id": ObjectId(user_id)}, {
+                         "_id": 0, "name": 0, "username": 0, "my_recipes": 0})['favourite_recipes'])
     return [get_recipe(recipe_id) for recipe_id in favourite_ids]
+
+
+def add_user_recipe_to_list(user_id, list_name, recipe_id):
+    """
+    Add recipe id to user's my_recipes list
+    """
+    try:
+        mongo.db.users.update_one({'_id': ObjectId(user_id)}, {'$push':{list_name:recipe_id}})
+    except:
+        print("Recipe id not added to user's list")
+
+def remove_user_recipe_from_list(user_id, list_name, recipe_id):
+    """
+    Remove recipe id from user's recipe list
+    """
+    try:
+        mongo.db.users.update_one({'_id': ObjectId(user_id)}, {'$pull': {list_name: recipe_id}})
+    except:
+        print("Recipe id not removed from user's list")
+
+
+
+
 
 
 if __name__ == '__main__':
