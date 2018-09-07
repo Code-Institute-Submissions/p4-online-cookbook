@@ -124,7 +124,14 @@ class TestCookbook(unittest.TestCase):
 
     def test_get_user_recipes(self):
         """
-        Test to ensure we can get users recipes
+        Test to ensure we can get users' recipes
         """
         user_id = "5b648d93fb6fc072a40f6d8f"
         self.assertIn(app.get_recipe('5b91483146073f953359fce8'), list(app.get_user_recipes(user_id)))
+
+    def test_get_user_favourites(self):
+        """
+        Test to ensure we can get users' favourite recipes
+        """
+        user_id = "5b648d93fb6fc072a40f6d8f"
+        self.assertIn(app.get_recipe('5b91483146073f953359fce8'),app.get_user_favourites(user_id))

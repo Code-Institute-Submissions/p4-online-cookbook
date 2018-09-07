@@ -92,10 +92,17 @@ def delete_user(user_id):
 
 def get_user_recipes(user_id):
     """
-    Get user recipes from the database
+    Get user's recipes from the database
     """
     return mongo.db.recipes.find({'author': user_id})
 
+
+def get_user_favourites(user_id):
+    """
+    Get user's favourite recipes from the database
+    """
+    favourite_ids = list(mongo.db.users.find_one({"_id": ObjectId(user_id)},{"_id":0, "name":0, "username":0, "my_recipes":0})['favourite_recipes'])
+    return [get_recipe(recipe_id) for recipe_id in favourite_ids]
 
 
 if __name__ == '__main__':
