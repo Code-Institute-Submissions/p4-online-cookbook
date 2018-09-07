@@ -122,6 +122,13 @@ class TestCookbook(unittest.TestCase):
         self.assertIn(new_user, list(app.get_users()))
         app.delete_user('000000000000000000000002')
 
+    def test_get_user(self):
+        """
+        Test to ensure we can get a user from the database by their id
+        """
+        user_id = "5b648d93fb6fc072a40f6d8f"
+        self.assertEqual(app.get_user(user_id)['username'], 'sarahloh')
+
     def test_get_user_recipes(self):
         """
         Test to ensure we can get users' recipes
