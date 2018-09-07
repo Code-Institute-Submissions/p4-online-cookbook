@@ -8,6 +8,9 @@ from bson.objectid import ObjectId
 
 
 class TestCookbook(unittest.TestCase):
+    """
+    Test suite for Online Cookbook
+    """
 
     def test_get_recipes(self):
         """
@@ -98,8 +101,7 @@ class TestCookbook(unittest.TestCase):
         """
         recipe_id = '000000000000000000000001'
         app.delete_recipe(recipe_id)
-        self.assertNotIn(app.get_recipe(
-            recipe_id), list(app.get_recipes()))
+        self.assertNotIn(app.get_recipe(recipe_id),list(app.get_recipes()))
 
     def test_get_users(self):
         """
@@ -186,7 +188,8 @@ class TestCookbook(unittest.TestCase):
         """
         user_id = "5b648d93fb6fc072a40f6d8f"
         recipe_id = "5b8fc23a59d1979fc3608b09"
-        app.remove_user_recipe_from_list(user_id, 'favourite_recipes', recipe_id)
+        app.remove_user_recipe_from_list(
+            user_id, 'favourite_recipes', recipe_id)
         self.assertNotIn(recipe_id, list(app.get_user_recipes(user_id)))
 
         # re-add recipe after test
@@ -200,7 +203,8 @@ class TestCookbook(unittest.TestCase):
         recipe_id = "5b8fc23a59d1979fc3608b09"
 
         # remove recipe before test
-        app.remove_user_recipe_from_list(user_id, 'favourites_recipes', recipe_id)
+        app.remove_user_recipe_from_list(
+            user_id, 'favourites_recipes', recipe_id)
 
         app.add_user_recipe_to_list(user_id, 'favourites_recipes', recipe_id)
         self.assertIn(app.get_recipe(recipe_id),
@@ -232,4 +236,3 @@ class TestCookbook(unittest.TestCase):
         not_a_username = "ilovecake"
         self.assertTrue(app.authenticate_user(username))
         self.assertFalse(app.authenticate_user(not_a_username))
-
