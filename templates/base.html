@@ -15,6 +15,50 @@
 
 <body>
     <header>
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <a class="navbar-brand" href="#">Online Cookbook</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    <li class="nav-item my-2">
+                        <a class="nav-link" href="#">All Recipes</a>
+                    </li>
+                    {% if user %}
+                    <li class="nav-item my-2">
+                        <a class="nav-link" href="/login">Add Recipe</a>
+                    </li>
+                    <li class="nav-item my-2">
+                        <a class="nav-link" href="#">Manage Recipes</a>
+                    </li>
+                    <li class="nav-item my-2">
+                        <a class="nav-link" href="#">Log Out</a>
+                    </li>
+                    {% else %}
+                    <form action="{{url_for('login')}}" method="POST" class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" name="username" placeholder="username">
+                        <button class="btn btn-outline-success my-2 mr-2 my-sm-0" type="submit" name="login">Log In</button>
+                        <button class="btn btn-outline-info my-2 my-sm-0" type="submit" name="signup">Sign Up</button>
+                    </form>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
     </header>
 
     <div class="container">

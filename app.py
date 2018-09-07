@@ -1,9 +1,10 @@
 import os
-from flask import Flask, render_template, redirect, request, url_for
+from flask import Flask, render_template, redirect, request, url_for, flash
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 
 app = Flask(__name__)
+app.secret_key = 'some_secret'
 
 app.config["MONGO_DBNAME"] = 'sl_task_manager'
 app.config["MONGO_URI"] = os.getenv('MONGO_URI')
@@ -11,12 +12,34 @@ app.config["MONGO_URI"] = os.getenv('MONGO_URI')
 mongo = PyMongo(app)
 
 
-@app.route('/')
-def index():
+@app.route('/', defaults={'username':None})
+@app.route('/<username>')
+def index(username):
     """
     Display the recipes colection on index.html
     """
-    return render_template("index.html", recipes=get_recipes())
+    return render_template("index.html", recipes=get_recipes(), user=get_user_by_username(username))
+
+
+@app.route('/login',  methods=['POST'])
+def login():
+    """
+    Authenticate a user and redirect back
+    """
+    username_input = request.form.get('username')
+    if 'login' in request.form:
+        if authenticate_user(username_input):
+            flash('You were successfully logged in!')
+            return redirect(url_for('index', username=username_input))
+        else:
+            flash('Sorry - that username is not registered!')
+            return redirect(url_for('index'))
+    else:
+        # sign up was selected
+        return redirect(url_for('signup', username=username_input))
+
+
+
 
 
 def get_recipes():
