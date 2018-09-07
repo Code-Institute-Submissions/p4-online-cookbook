@@ -157,6 +157,13 @@ def unfavourite_a_recipe(recipe_id):
                                 '$inc': {'favourites': -1}})
 
 
+def authenticate_user(username):
+    """
+    Check if a user exists by their username
+    """
+    return True if get_user_by_username(username) else False
+
+
 if __name__ == '__main__':
     app.run(host=os.getenv('IP'),
             port=os.getenv('PORT'),

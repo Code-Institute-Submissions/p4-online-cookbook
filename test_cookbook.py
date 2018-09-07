@@ -192,7 +192,7 @@ class TestCookbook(unittest.TestCase):
         # re-add recipe after test
         app.add_user_recipe_to_list(user_id, 'favourite_recipes', recipe_id)
 
-    def test_add_user_recipe(self):
+    def test_add_user_favourite(self):
         """
         Test to ensure we can add a recipe id to a user's favourites list
         """
@@ -223,3 +223,13 @@ class TestCookbook(unittest.TestCase):
         num_favs = app.get_recipe(recipe_id)['favourites']
         app.unfavourite_a_recipe(recipe_id)
         self.assertEqual(app.get_recipe(recipe_id)['favourites'], num_favs-1)
+
+    def test_authenticate_user(self):
+        """
+        Test to ensure that we can see if a user exists or not
+        """
+        username = "sarahloh"
+        not_a_username = "ilovecake"
+        self.assertTrue(app.authenticate_user(username))
+        self.assertFalse(app.authenticate_user(not_a_username))
+
