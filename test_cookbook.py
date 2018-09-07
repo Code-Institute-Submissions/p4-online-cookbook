@@ -122,23 +122,33 @@ class TestCookbook(unittest.TestCase):
         self.assertIn(new_user, list(app.get_users()))
         app.delete_user('000000000000000000000002')
 
-    def test_get_user(self):
+    def test_get_user_by_id(self):
         """
         Test to ensure we can get a user from the database by their id
         """
         user_id = "5b648d93fb6fc072a40f6d8f"
-        self.assertEqual(app.get_user(user_id)['username'], 'sarahloh')
+        self.assertEqual(app.get_user_by_id(user_id)['username'], 'sarahloh')
+
+    def test_get_user_by_username(self):
+        """
+        Test to ensure we can get a user from the database by their username
+        """
+        username = "sarahloh"
+        user_id = "5b648d93fb6fc072a40f6d8f"
+        self.assertEqual(app.get_user_by_username(username)['_id'], ObjectId(user_id))
 
     def test_get_user_recipes(self):
         """
         Test to ensure we can get users' recipes
         """
         user_id = "5b648d93fb6fc072a40f6d8f"
-        self.assertIn(app.get_recipe('5b91483146073f953359fce8'), list(app.get_user_recipes(user_id)))
+        self.assertIn(app.get_recipe('5b91483146073f953359fce8'),
+                      list(app.get_user_recipes(user_id)))
 
     def test_get_user_favourites(self):
         """
         Test to ensure we can get users' favourite recipes
         """
         user_id = "5b648d93fb6fc072a40f6d8f"
-        self.assertIn(app.get_recipe('5b91483146073f953359fce8'),app.get_user_favourites(user_id))
+        self.assertIn(app.get_recipe('5b91483146073f953359fce8'),
+                      app.get_user_favourites(user_id))

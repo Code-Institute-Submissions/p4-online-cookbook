@@ -83,11 +83,18 @@ def add_user(user):
     mongo.db.users.insert_one(user)
 
 
-def get_user(user_id):
+def get_user_by_id(user_id):
     """
     Get user from the database by their id
     """
     return mongo.db.users.find_one({'_id': ObjectId(user_id)})
+
+
+def get_user_by_username(username):
+    """
+    Get user from the database by their username
+    """
+    return mongo.db.users.find_one({'username': username})
 
 
 def delete_user(user_id):
