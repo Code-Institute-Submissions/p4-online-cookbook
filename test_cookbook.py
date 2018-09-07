@@ -74,22 +74,22 @@ class TestCookbook(unittest.TestCase):
         app.add_recipe(new_recipe)
         self.assertTrue(new_recipe in list(app.get_recipes()))
 
-    def test_get_recipe_by_id(self):
+    def test_get_recipe(self):
         """
         Test to ensure we can get a recipe from the database by its id
         """
         recipe_id = '5b91483146073f953359fce8'
-        self.assertEqual(app.get_recipe_by_id(recipe_id)[
+        self.assertEqual(app.get_recipe(recipe_id)[
                          'name'], 'Cinnamon Chocolate Soufflé')
 
     def test_update_recipe(self):
         """
         Test to ensure we can update a recipe in the database
         """
-        recipe = app.get_recipe_by_id('5b91483146073f953359fce8')
+        recipe = app.get_recipe('5b91483146073f953359fce8')
         recipe['favourites'] = 289
         app.update_recipe(recipe)
-        self.assertEqual(app.get_recipe_by_id(
+        self.assertEqual(app.get_recipe(
             recipe['_id'])['favourites'], 289)
 
     def test_delete_recipe(self):
@@ -98,7 +98,7 @@ class TestCookbook(unittest.TestCase):
         """
         recipe_id = '000000000000000000000001'
         app.delete_recipe(recipe_id)
-        self.assertNotIn(app.get_recipe_by_id(
+        self.assertNotIn(app.get_recipe(
             recipe_id), list(app.get_recipes()))
 
     def test_get_users(self):
@@ -122,3 +122,9 @@ class TestCookbook(unittest.TestCase):
         self.assertIn(new_user, list(app.get_users()))
         app.delete_user('000000000000000000000002')
 
+    def test_get_user_recipes(self):
+        """
+        Test to ensure we can get users recipes
+        """
+        user_id = "5b648d93fb6fc072a40f6d8f"
+        self.assertIn(app.get_recipe('5b91483146073f953359fce8'), list(app.get_user_recipes(user_id)))

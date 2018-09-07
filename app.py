@@ -45,7 +45,7 @@ def add_recipe(recipe):
     mongo.db.recipes.insert_one(recipe)
 
 
-def get_recipe_by_id(recipe_id):
+def get_recipe(recipe_id):
     """
     Get recipe from the database based on its id
     """
@@ -88,6 +88,14 @@ def delete_user(user_id):
     Remove user from the database
     """
     mongo.db.users.delete_one({'_id': ObjectId(user_id)})
+
+
+def get_user_recipes(user_id):
+    """
+    Get user recipes from the database
+    """
+    return mongo.db.recipes.find({'author': user_id})
+
 
 
 if __name__ == '__main__':
