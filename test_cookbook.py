@@ -206,3 +206,20 @@ class TestCookbook(unittest.TestCase):
         self.assertIn(app.get_recipe(recipe_id),
                       list(app.get_user_recipes(user_id)))
 
+    def test_favourite_a_recipe(self):
+        """
+        Test to ensure we can increment a recipe's number of favourites
+        """
+        recipe_id = "5b8fc23a59d1979fc3608b0b"
+        num_favs = app.get_recipe(recipe_id)['favourites']
+        app.favourite_a_recipe(recipe_id)
+        self.assertEqual(app.get_recipe(recipe_id)['favourites'], num_favs+1)
+
+    def test_unfavourite_a_recipe(self):
+        """
+        Test to ensure we can decrement a recipe's number of favourites
+        """
+        recipe_id = "5b8fc23a59d1979fc3608b0b"
+        num_favs = app.get_recipe(recipe_id)['favourites']
+        app.unfavourite_a_recipe(recipe_id)
+        self.assertEqual(app.get_recipe(recipe_id)['favourites'], num_favs-1)

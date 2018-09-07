@@ -125,22 +125,36 @@ def add_user_recipe_to_list(user_id, list_name, recipe_id):
     Add recipe id to user's my_recipes list
     """
     try:
-        mongo.db.users.update_one({'_id': ObjectId(user_id)}, {'$push':{list_name:recipe_id}})
+        mongo.db.users.update_one({'_id': ObjectId(user_id)}, {
+                                  '$push': {list_name: recipe_id}})
     except:
         print("Recipe id not added to user's list")
+
 
 def remove_user_recipe_from_list(user_id, list_name, recipe_id):
     """
     Remove recipe id from user's recipe list
     """
     try:
-        mongo.db.users.update_one({'_id': ObjectId(user_id)}, {'$pull': {list_name: recipe_id}})
+        mongo.db.users.update_one({'_id': ObjectId(user_id)}, {
+                                  '$pull': {list_name: recipe_id}})
     except:
         print("Recipe id not removed from user's list")
 
 
+def favourite_a_recipe(recipe_id):
+    """
+    Increment a recipe's number of favourites
+    """
+    mongo.db.recipes.update_one({'_id': ObjectId(recipe_id)}, {'$inc': {'favourites': 1}})
 
 
+def unfavourite_a_recipe(recipe_id):
+    """
+    Decrement a recipe's number of favourites
+    """
+    mongo.db.recipes.update_one({'_id': ObjectId(recipe_id)}, {
+                                '$inc': {'favourites': -1}})
 
 
 if __name__ == '__main__':
