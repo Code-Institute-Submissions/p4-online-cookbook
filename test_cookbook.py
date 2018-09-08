@@ -82,8 +82,7 @@ class TestCookbook(unittest.TestCase):
         Test to ensure we can get a recipe from the database by its id
         """
         recipe_id = '5b91483146073f953359fce8'
-        self.assertEqual(app.get_recipe(recipe_id)[
-                         'name'], 'Cinnamon Chocolate Soufflé')
+        self.assertEqual(app.get_recipe(recipe_id)['name'], 'Cinnamon Chocolate Soufflé')
 
     def test_update_recipe(self):
         """
