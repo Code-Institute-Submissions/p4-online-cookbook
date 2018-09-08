@@ -4,7 +4,7 @@ from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 
 app = Flask(__name__)
-app.secret_key = 'some_secret'
+app.secret_key = os.getenv('APP_SECRET_FLASH')
 
 app.config["MONGO_DBNAME"] = 'sl_task_manager'
 app.config["MONGO_URI"] = os.getenv('MONGO_URI')
