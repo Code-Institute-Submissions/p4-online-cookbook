@@ -25,11 +25,14 @@
                 aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                     <li class="nav-item my-2">
-                        <a class="nav-link" href="#">All Recipes</a>
+                        {% if user %}
+                        <a class="nav-link" href="{{url_for('index', username=user['username'])}}">All Recipes</a>
+                        {% else %}
+                        <a class="nav-link" href="{{url_for('index')}}">All Recipes</a>
+                        {% endif %}
                     </li>
                     {% if user %}
                     <li class="nav-item my-2">
