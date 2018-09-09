@@ -64,6 +64,12 @@ def signup(username):
             return redirect(url_for('index', username=new_user['username']))
 
 
+@app.route('/logout/<username>')
+def logout(username):
+    flash('Goodbye %s! You have been logged out.' % username)
+    return redirect(url_for('index'))
+
+
 def get_recipes():
     """
     Read all recipes fromthe database and return a list sorted by favourites in descending order
