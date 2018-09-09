@@ -1,3 +1,23 @@
 .form-group {
     margin-bottom: 1.5rem;
 }
+
+.recipe-card {
+    margin: 1rem;
+    border: 0.5px solid #bbb;
+}
+
+.recipe-card .fa-heart {
+    margin-top: 1rem;
+}
+
+.recipe-card .favs {
+    font-size: 2rem;
+}
+
+.recipe-card-image {
+    height: 100px;
+    max-height: 100px;
+    width: 100px;
+    background-size: cover;
+}

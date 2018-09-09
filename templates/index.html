@@ -1,6 +1,33 @@
 {% extends 'base.html' %} {% block content %}
 
-<ul>
+<div class="recipe-cards">
+    <div class="row">
+
+        {% for recipe in recipes %}
+        <div class="col-12 col-sm-10 col-md-6 col-lg-4">
+            <div class="recipe-card">
+                <div class="row h-100 no-gutters">
+                    <div class="col-2 text-center">
+                        <span class="d-block favs"><i class="fas fa-heart"></i></span>
+                        {{recipe.favourites|int}}
+                    </div>
+                    <div class="col-4">
+                        <div class="recipe-card-image" style="background-image:url({{recipe.image_url}})">
+                            <a href="#"></a>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        {{recipe.name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+<!-- <ul>
     {% for recipe in recipes %}
     <li>
         <div class="recipe-card">
@@ -19,6 +46,6 @@
         </div>
     </li>
     {% endfor %}
-</ul>
+</ul> -->
 
 {% endblock %}
