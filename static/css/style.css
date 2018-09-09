@@ -21,3 +21,7 @@
     width: 100px;
     background-size: cover;
 }
+
+.recipe-card a {
+    color: #111111;
+}
