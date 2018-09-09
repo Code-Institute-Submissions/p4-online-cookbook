@@ -12,7 +12,7 @@ app.config["MONGO_URI"] = os.getenv('MONGO_URI')
 mongo = PyMongo(app)
 
 
-@app.route('/', defaults={'username':None})
+@app.route('/', defaults={'username': None})
 @app.route('/<username>')
 def index(username):
     """
@@ -29,17 +29,39 @@ def login():
     username_input = request.form.get('username')
     if 'login' in request.form:
         if authenticate_user(username_input):
-            flash('You were successfully logged in!')
+            flash('Welcome back %s!' % username_input)
             return redirect(url_for('index', username=username_input))
         else:
-            flash('Sorry - that username is not registered!')
+            flash('Sorry - the username "%s" is not registered!' %
+                  username_input)
             return redirect(url_for('index'))
     else:
         # sign up was selected
         return redirect(url_for('signup', username=username_input))
 
 
-
+@app.route('/signup/', methods=['GET', 'POST'], defaults={'username': None})
+@app.route('/signup/<username>')
+def signup(username):
+    """
+    Render signup page with GET and register a new user with POST request
+    """
+    if request.method == 'GET':
+        return render_template("signup.html", username=username)
+    else:
+        if authenticate_user(request.form['username']):
+            error_msg = "The username '%s' is already taken!" % request.form['username']
+            return render_template("signup.html", username=None, username_error=error_msg)
+        else:
+            new_user = {
+                'name': request.form['name'],
+                'username': request.form['username'],
+                'my_recipes': [],
+                'favourite_recipes': []
+            }
+            mongo.db.users.insert_one(new_user)
+            flash('Welcome %s!' % new_user['username'])
+            return redirect(url_for('index', username=new_user['username']))
 
 
 def get_recipes():
@@ -169,7 +191,8 @@ def favourite_a_recipe(recipe_id):
     """
     Increment a recipe's number of favourites
     """
-    mongo.db.recipes.update_one({'_id': ObjectId(recipe_id)}, {'$inc': {'favourites': 1}})
+    mongo.db.recipes.update_one({'_id': ObjectId(recipe_id)}, {
+                                '$inc': {'favourites': 1}})
 
 
 def unfavourite_a_recipe(recipe_id):
