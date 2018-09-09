@@ -203,9 +203,9 @@ class TestCookbook(unittest.TestCase):
 
         # remove recipe before test
         app.remove_user_recipe_from_list(
-            user_id, 'favourites_recipes', recipe_id)
+            user_id, 'favourite_recipes', recipe_id)
 
-        app.add_user_recipe_to_list(user_id, 'favourites_recipes', recipe_id)
+        app.add_user_recipe_to_list(user_id, 'favourite_recipes', recipe_id)
         self.assertIn(app.get_recipe(recipe_id),
                       list(app.get_user_recipes(user_id)))
 
