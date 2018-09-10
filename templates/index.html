@@ -10,11 +10,11 @@
                         <span class="d-block favs">
                             {% if user %}
                                 {% if '%s'|format(recipe._id) in user_favs %}
-                                <a href="{{url_for('unfavourite', user_id=user._id, recipe_id=recipe._id)}}">
+                                <a href="{{url_for('unfavourite', user_id=user._id, recipe_id=recipe._id, next=request.url)}}">
                                     <i class="fas fa-heart"></i>
                                 </a>
                                 {% else %}
-                                <a href="{{url_for('favourite', user_id=user._id, recipe_id=recipe._id)}}">
+                                <a href="{{url_for('favourite', user_id=user._id, recipe_id=recipe._id, next=request.url)}}">
                                     <i class="far fa-heart"></i>
                                 </a>
                                 {% endif %}

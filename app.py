@@ -80,7 +80,8 @@ def favourite(user_id,recipe_id):
     """
     add_user_recipe_to_list(user_id, 'favourite_recipes', recipe_id)
     favourite_a_recipe(recipe_id)
-    return redirect(url_for('index', username=get_user_by_id(user_id)['username']))
+    # return redirect(url_for('index', username=get_user_by_id(user_id)['username']))
+    return redirect(request.args.get('next'))
 
 
 @app.route('/unfavourite/<user_id>/<recipe_id>')
@@ -90,7 +91,8 @@ def unfavourite(user_id,recipe_id):
     """
     remove_user_recipe_from_list(user_id, 'favourite_recipes', recipe_id)
     unfavourite_a_recipe(recipe_id)
-    return redirect(url_for('index', username=get_user_by_id(user_id)['username']))
+    # return redirect(url_for('index', username=get_user_by_id(user_id)['username']))
+    return redirect(request.args.get('next'))
 
 
 @app.route('/recipe/<recipe_id>')
