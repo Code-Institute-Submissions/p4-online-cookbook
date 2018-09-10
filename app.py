@@ -19,8 +19,6 @@ def index(username):
     Display the recipes colection on index.html
     """
     if get_user_by_username(username):
-        print(get_user_by_username(username)['favourite_recipes'][0] in get_user_favourites_ids(username)[0])
-
         return render_template("index.html", recipes=get_recipes(), user=get_user_by_username(username), user_favs=get_user_favourites_ids(username))
     else:
         return render_template("index.html", recipes=get_recipes())
@@ -73,6 +71,26 @@ def signup(username):
 def logout(username):
     flash('Goodbye %s! You have been logged out.' % username)
     return redirect(url_for('index'))
+
+
+@app.route('/favourite/<user_id>/<recipe_id>')
+def favourite(user_id,recipe_id):
+    """
+    Handle user click on recipe favourite icon to add favourite
+    """
+    add_user_recipe_to_list(user_id, 'favourite_recipes', recipe_id)
+    favourite_a_recipe(recipe_id)
+    return redirect(url_for('index', username=get_user_by_id(user_id)['username']))
+
+
+@app.route('/unfavourite/<user_id>/<recipe_id>')
+def unfavourite(user_id,recipe_id):
+    """
+    Handle user click on recipe favourite icon to remove from favourites
+    """
+    remove_user_recipe_from_list(user_id, 'favourite_recipes', recipe_id)
+    unfavourite_a_recipe(recipe_id)
+    return redirect(url_for('index', username=get_user_by_id(user_id)['username']))
 
 
 def get_recipes():
@@ -185,7 +203,7 @@ def get_user_favourites_ids(username):
 
 def add_user_recipe_to_list(user_id, list_name, recipe_id):
     """
-    Add recipe id to user's my_recipes list
+    Add recipe id to user's my_recipes or favourite_recipes list
     """
     try:
         mongo.db.users.update_one({'_id': ObjectId(user_id)}, {

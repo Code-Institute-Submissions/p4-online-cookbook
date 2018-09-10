@@ -8,14 +8,20 @@
                 <div class="row h-100 no-gutters">
                     <div class="col-2 text-center pl-2">
                         <span class="d-block favs">
-                            {% if user_favs %}
+                            {% if user %}
                                 {% if '%s'|format(recipe._id) in user_favs %}
-                                <i class="fas fa-heart"></i>
+                                <a href="{{url_for('unfavourite', user_id=user._id, recipe_id=recipe._id)}}">
+                                    <i class="fas fa-heart"></i>
+                                </a>
                                 {% else %}
-                                <i class="far fa-heart"></i>
+                                <a href="{{url_for('favourite', user_id=user._id, recipe_id=recipe._id)}}">
+                                    <i class="far fa-heart"></i>
+                                </a>
                                 {% endif %}
                             {% else %}
-                            <i class="far fa-heart"></i>
+                            <a href="{{url_for('signup')}}">
+                                <i class="far fa-heart"></i>
+                            </a>
                             {% endif %}
                         </span>
                         {{recipe.favourites|int}}
@@ -28,7 +34,7 @@
                     <div class="col-6 px-2">
                         <a class="d-block mb-3" href="/recipe/{{recipe._id}}"><u>{{recipe.name}}</u></a>
                         <i class="fas fa-clock"></i>
-                        <span>{{recipe.time.hours}} h {{recipe.time.minutes}} m</span>
+                        <span>{{recipe.time.hours|int}} h {{recipe.time.minutes|int}} m</span>
                     </div>
                 </div>
             </div>
