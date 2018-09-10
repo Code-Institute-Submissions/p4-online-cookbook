@@ -93,6 +93,14 @@ def unfavourite(user_id,recipe_id):
     return redirect(url_for('index', username=get_user_by_id(user_id)['username']))
 
 
+@app.route('/recipe/<recipe_id>')
+def recipe(recipe_id):
+    """
+    Render the recipe page
+    """
+    return render_template("recipe.html", recipe=get_recipe(recipe_id))
+
+
 def get_recipes():
     """
     Read all recipes fromthe database and return a list sorted by favourites in descending order
