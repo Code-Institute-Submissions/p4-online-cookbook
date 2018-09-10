@@ -12,17 +12,28 @@ app.config["MONGO_URI"] = os.getenv('MONGO_URI')
 mongo = PyMongo(app)
 
 
-@app.route('/', defaults={'username': None})
+@app.route('/', methods=['GET', 'POST'], defaults={'username': None})
 @app.route('/<username>')
 def index(username):
     """
     Display the recipes colection on index.html
     """
-    if get_user_by_username(username):
-        return render_template("index.html", recipes=get_recipes(), user=get_user_by_username(username), user_favs=get_user_favourites_ids(username))
+    if request.method == 'GET':
+        if get_user_by_username(username):
+            return render_template("index.html", recipes=get_recipes(), user=get_user_by_username(username), user_favs=get_user_favourites_ids(username), filters={'type':'all','cuisine':'all'})
+        else:
+            return render_template("index.html", recipes=get_recipes(), filters={'type': 'all', 'cuisine': 'all'})
     else:
-        return render_template("index.html", recipes=get_recipes())
-
+        # POST request
+        filters = {
+            'type': '' if request.form['type'] == 'All' else request.form['type'].lower(),
+            'cuisine': '' if request.form['cuisine'] ==
+                'All' else request.form['cuisine'].lower()
+        }
+        if get_user_by_username(username):
+            return render_template("index.html", recipes=get_recipes_by_filters(filters), user=get_user_by_username(username), user_favs=get_user_favourites_ids(username), filters=filters)
+        else:
+            return render_template("index.html", recipes=get_recipes_by_filters(filters), filters=filters)
 
 @app.route('/login',  methods=['POST'])
 def login():

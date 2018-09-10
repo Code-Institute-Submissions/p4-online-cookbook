@@ -1,5 +1,45 @@
 {% extends 'base.html' %} {% block content %}
 
+<div class="filters">
+
+    {% if user %}
+    <form action="{{url_for('index', username=user.username)}}" method="POST">
+    {% else %}
+    <form action="{{url_for('index')}}" method="POST">
+    {% endif %}
+        <div class="form-group">
+            <label for="inputType">Dish Type</label>
+            <select id="inputType" name="type" class="form-control">
+                <option {{ 'selected' if (filters.type == 'all') }}>All</option>
+                <option {{ 'selected' if (filters.type == 'starter') }}>Starter</option>
+                <option {{ 'selected' if (filters.type == 'soup') }}>Soup</option>
+                <option {{ 'selected' if (filters.type == 'salad') }}>Salad</option>
+                <option {{ 'selected' if (filters.type == 'main course') }}>Main Course</option>
+                <option {{ 'selected' if (filters.type == 'dessert') }}>Dessert</option>
+                <option {{ 'selected' if (filters.type == 'cake') }}>Cake</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="inputCuisine">Cuisine</label>
+            <select id="inputCuisine" name="cuisine" class="form-control">
+                <option {{ 'selected' if (filters.cuisine == 'all') }}>All</option>
+                <option {{ 'selected' if (filters.cuisine == 'indian') }}>Indian</option>
+                <option {{ 'selected' if (filters.cuisine == 'chinese') }}>Chinese</option>
+                <option {{ 'selected' if (filters.cuisine == 'italian') }}>Italian</option>
+                <option {{ 'selected' if (filters.cuisine == 'french') }}>French</option>
+                <option {{ 'selected' if (filters.cuisine == 'spanish') }}>Spanish</option>
+                <option {{ 'selected' if (filters.cuisine == 'asian') }}>Asian</option>
+                <option {{ 'selected' if (filters.cuisine == 'african') }}>African</option>
+                <option {{ 'selected' if (filters.cuisine == 'british') }}>British</option>
+                <option {{ 'selected' if (filters.cuisine == 'american') }}>American</option>
+                <option {{ 'selected' if (filters.cuisine == 'irish') }}>Irish</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Apply Filters</button>
+    </form>
+
+</div>
+
 <div class="recipe-cards">
     <div class="row no-gutters">
         {% for recipe in recipes %}
@@ -9,15 +49,15 @@
                     <div class="col-2 text-center pl-2">
                         <span class="d-block favs">
                             {% if user %}
-                                {% if '%s'|format(recipe._id) in user_favs %}
-                                <a href="{{url_for('unfavourite', user_id=user._id, recipe_id=recipe._id, next=request.url)}}">
-                                    <i class="fas fa-heart"></i>
-                                </a>
-                                {% else %}
-                                <a href="{{url_for('favourite', user_id=user._id, recipe_id=recipe._id, next=request.url)}}">
-                                    <i class="far fa-heart"></i>
-                                </a>
-                                {% endif %}
+                            {% if '%s'|format(recipe._id) in user_favs %}
+                            <a href="{{url_for('unfavourite', user_id=user._id, recipe_id=recipe._id, next=request.url)}}">
+                                <i class="fas fa-heart"></i>
+                            </a>
+                            {% else %}
+                            <a href="{{url_for('favourite', user_id=user._id, recipe_id=recipe._id, next=request.url)}}">
+                                <i class="far fa-heart"></i>
+                            </a>
+                            {% endif %}
                             {% else %}
                             <a href="{{url_for('signup')}}">
                                 <i class="far fa-heart"></i>
@@ -43,26 +83,5 @@
 
     </div>
 </div>
-
-<!-- <ul>
-    {% for recipe in recipes %}
-    <li>
-        <div class="recipe-card">
-            <h3>{{recipe.name}}</h3>
-            <img src="{{recipe.image_url}}" alt="recipe image" width="200">
-            <p>Id: {{recipe._id}}</p>
-            <p>Time: {{recipe.time}}</p>
-            <p>Author: {{recipe.author}}</p>
-            <p>Description: {{recipe.description}}</p>
-            <p>Ingredients: {{recipe.ingredients}}</p>
-            <p>Method: {{recipe.method}}</p>
-            <p>Date Added: {{recipe.date_added}}</p>
-            <p>Favourites: {{recipe.favourites}}</p>
-            <p>Cuisine: {{recipe.cuisine}}</p>
-            <p>Type: {{recipe.type}}</p>
-        </div>
-    </li>
-    {% endfor %}
-</ul> -->
 
 {% endblock %}
