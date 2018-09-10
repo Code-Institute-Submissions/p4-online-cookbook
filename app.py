@@ -18,7 +18,12 @@ def index(username):
     """
     Display the recipes colection on index.html
     """
-    return render_template("index.html", recipes=get_recipes(), user=get_user_by_username(username))
+    if get_user_by_username(username):
+        print(get_user_by_username(username)['favourite_recipes'][0] in get_user_favourites_ids(username)[0])
+
+        return render_template("index.html", recipes=get_recipes(), user=get_user_by_username(username), user_favs=get_user_favourites_ids(username))
+    else:
+        return render_template("index.html", recipes=get_recipes())
 
 
 @app.route('/login',  methods=['POST'])
@@ -162,13 +167,20 @@ def get_user_recipes(user_id):
     return mongo.db.recipes.find({'author': user_id})
 
 
-def get_user_favourites(user_id):
+def get_user_favourites(username):
     """
     Get user's favourite recipes from the database
     """
-    favourite_ids = list(mongo.db.users.find_one({"_id": ObjectId(user_id)}, {
+    return [get_recipe(recipe_id) for recipe_id in get_user_favourites_ids(username)]
+
+
+def get_user_favourites_ids(username):
+    """
+    Get a list of ids for a user's favourite recipes from the database
+    """
+    favourites_ids = list(mongo.db.users.find_one({"username": username}, {
                          "_id": 0, "name": 0, "username": 0, "my_recipes": 0})['favourite_recipes'])
-    return [get_recipe(recipe_id) for recipe_id in favourite_ids]
+    return favourites_ids
 
 
 def add_user_recipe_to_list(user_id, list_name, recipe_id):
