@@ -25,21 +25,3 @@
 .recipe-card a {
     color: #111111;
 }
-
-
-.filters .card-header,
-.filters .card-body {
-    padding: 0;
-}
-
-.filters .filter-list {
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style-type: none;
-}
-
-.filters .filter-item a {
-    padding-left: 2rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-}
