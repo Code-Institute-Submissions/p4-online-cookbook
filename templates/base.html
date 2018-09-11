@@ -24,7 +24,7 @@
     <header>
         <nav class="navbar navbar-expand-md navbar-light bg-light">
             {% if user %}
-            <a class="navbar-brand" href="{{url_for('index', username=user['username'])}}">Online Cookbook</a>
+            <a class="navbar-brand" href="{{url_for('index', filter_type='all', filter_cuisine='all', username=user['username'])}}">Online Cookbook</a>
             {% else %}
             <a class="navbar-brand" href="{{url_for('index')}}">Online Cookbook</a>
             {% endif %}
@@ -36,7 +36,7 @@
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                     <li class="nav-item my-2">
                         {% if user %}
-                        <a class="nav-link" href="{{url_for('index', username=user['username'])}}">All Recipes</a>
+                        <a class="nav-link" href="{{url_for('index', filter_type='all', filter_cuisine='all', username=user['username'])}}">All Recipes</a>
                         {% else %}
                         <a class="nav-link" href="{{url_for('index')}}">All Recipes</a>
                         {% endif %}

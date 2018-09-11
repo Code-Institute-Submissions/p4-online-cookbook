@@ -3,7 +3,7 @@
 <div class="filters">
 
     {% if user %}
-    <form action="{{url_for('index', username=user.username)}}" method="POST">
+    <form action="{{url_for('index', filter_type='all', filter_cuisine='all', username=user.username)}}" method="POST">
     {% else %}
     <form action="{{url_for('index')}}" method="POST">
     {% endif %}

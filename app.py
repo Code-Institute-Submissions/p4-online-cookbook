@@ -12,28 +12,34 @@ app.config["MONGO_URI"] = os.getenv('MONGO_URI')
 mongo = PyMongo(app)
 
 
-@app.route('/', methods=['GET', 'POST'], defaults={'username': None})
-@app.route('/<username>')
-def index(username):
+@app.route('/', methods=['GET', 'POST'], defaults={'filter_type': 'all', 'filter_cuisine': 'all', 'username': None})
+@app.route('/<filter_type>/<filter_cuisine>', defaults={'username': None})
+@app.route('/<filter_type>/<filter_cuisine>/<username>', methods=['GET', 'POST'])
+def index(filter_type, filter_cuisine, username):
     """
     Display the recipes colection on index.html
     """
+    filters = {
+        'type': filter_type,
+        'cuisine': filter_cuisine
+    }
     if request.method == 'GET':
-        if get_user_by_username(username):
-            return render_template("index.html", recipes=get_recipes(), user=get_user_by_username(username), user_favs=get_user_favourites_ids(username), filters={'type':'all','cuisine':'all'})
-        else:
-            return render_template("index.html", recipes=get_recipes(), filters={'type': 'all', 'cuisine': 'all'})
-    else:
-        # POST request
-        filters = {
-            'type': '' if request.form['type'] == 'All' else request.form['type'].lower(),
-            'cuisine': '' if request.form['cuisine'] ==
-                'All' else request.form['cuisine'].lower()
-        }
-        if get_user_by_username(username):
+        if username:
             return render_template("index.html", recipes=get_recipes_by_filters(filters), user=get_user_by_username(username), user_favs=get_user_favourites_ids(username), filters=filters)
         else:
             return render_template("index.html", recipes=get_recipes_by_filters(filters), filters=filters)
+    else:
+        # POST request
+        new_filters = {
+            'type': 'all' if request.form['type'] == 'All' else request.form['type'].lower(),
+            'cuisine': 'all' if request.form['cuisine'] == 'All' else request.form['cuisine'].lower()
+        }
+        if username:
+            return redirect(url_for('index', filter_type=new_filters['type'], filter_cuisine=new_filters['cuisine'], username=username))
+        else:
+            return redirect(url_for('index', filter_type=new_filters['type'], filter_cuisine=new_filters['cuisine']))
+
+
 
 @app.route('/login',  methods=['POST'])
 def login():
@@ -44,14 +50,14 @@ def login():
     if 'login' in request.form:
         if authenticate_user(username_input):
             flash('Welcome back %s!' % username_input)
-            return redirect(url_for('index', username=username_input))
+            return redirect(url_for('index', filter_type='all', filter_cuisine='all', username=username_input))
         else:
             flash('Sorry - the username "%s" is not registered!' %
                   username_input)
             return redirect(url_for('index'))
     else:
         # sign up was selected
-        return redirect(url_for('signup', username=username_input))
+        return redirect(url_for('signup', filter_type='all', filter_cuisine='all', username=username_input))
 
 
 @app.route('/signup/', methods=['GET', 'POST'], defaults={'username': None})
@@ -75,7 +81,7 @@ def signup(username):
             }
             mongo.db.users.insert_one(new_user)
             flash('Welcome %s!' % new_user['username'])
-            return redirect(url_for('index', username=new_user['username']))
+            return redirect(url_for('index', filter_type='all', filter_cuisine='all', username=new_user['username']))
 
 
 @app.route('/logout/<username>')
@@ -85,24 +91,22 @@ def logout(username):
 
 
 @app.route('/favourite/<user_id>/<recipe_id>')
-def favourite(user_id,recipe_id):
+def favourite(user_id, recipe_id):
     """
     Handle user click on recipe favourite icon to add favourite
     """
     add_user_recipe_to_list(user_id, 'favourite_recipes', recipe_id)
     favourite_a_recipe(recipe_id)
-    # return redirect(url_for('index', username=get_user_by_id(user_id)['username']))
     return redirect(request.args.get('next'))
 
 
 @app.route('/unfavourite/<user_id>/<recipe_id>')
-def unfavourite(user_id,recipe_id):
+def unfavourite(user_id, recipe_id):
     """
     Handle user click on recipe favourite icon to remove from favourites
     """
     remove_user_recipe_from_list(user_id, 'favourite_recipes', recipe_id)
     unfavourite_a_recipe(recipe_id)
-    # return redirect(url_for('index', username=get_user_by_id(user_id)['username']))
     return redirect(request.args.get('next'))
 
 
@@ -125,9 +129,11 @@ def get_recipes_by_filters(filters):
     """
     Read recipes from the database based on filters
     """
-    if filters['type'] == '':
+    if (filters['type'] == 'all' and filters['cuisine'] == 'all'):
+        return mongo.db.recipes.find()
+    elif filters['type'] == 'all':
         return mongo.db.recipes.find({'cuisine': filters['cuisine']})
-    elif filters['cuisine'] == '':
+    elif filters['cuisine'] == 'all':
         return mongo.db.recipes.find({'type': filters['type']})
     else:
         return mongo.db.recipes.find({'type': filters['type'], 'cuisine': filters['cuisine']})
@@ -218,7 +224,7 @@ def get_user_favourites_ids(username):
     Get a list of ids for a user's favourite recipes from the database
     """
     favourites_ids = list(mongo.db.users.find_one({"username": username}, {
-                         "_id": 0, "name": 0, "username": 0, "my_recipes": 0})['favourite_recipes'])
+        "_id": 0, "name": 0, "username": 0, "my_recipes": 0})['favourite_recipes']) if username else []
     return favourites_ids
 
 
