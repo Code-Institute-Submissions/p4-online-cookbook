@@ -110,12 +110,16 @@ def unfavourite(user_id, recipe_id):
     return redirect(request.args.get('next'))
 
 
-@app.route('/recipe/<recipe_id>')
-def recipe(recipe_id):
+@app.route('/recipe/<recipe_id>/', defaults={'username':None})
+@app.route('/recipe/<recipe_id>/<username>')
+def recipe(recipe_id, username):
     """
     Render the recipe page
     """
-    return render_template("recipe.html", recipe=get_recipe(recipe_id))
+    if username:
+        return render_template("recipe.html", recipe=get_recipe(recipe_id), user=get_user_by_username(username))
+    else:
+        return render_template("recipe.html", recipe=get_recipe(recipe_id))
 
 
 def get_recipes():

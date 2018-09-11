@@ -68,11 +68,20 @@
                     </div>
                     <div class="col-4">
                         <div class="recipe-card-image mx-auto" style="background-image:url({{recipe.image_url}})">
+                            {% if user %}
+                                <a class="d-block w-100 h-100" href="/recipe/{{recipe._id}}/{{user.username}}"></a>
+                            {% else %}
                             <a class="d-block w-100 h-100" href="/recipe/{{recipe._id}}"></a>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-6 px-2">
+                        {% if user %}
+                        <a class="d-block mb-3" href="/recipe/{{recipe._id}}/{{user.username}}"><u>{{recipe.name}}</u></a>
+                        {% else %}
                         <a class="d-block mb-3" href="/recipe/{{recipe._id}}"><u>{{recipe.name}}</u></a>
+                        {% endif %}
+
                         <i class="fas fa-clock"></i>
                         <span>{{recipe.time.hours|int}} h {{recipe.time.minutes|int}} m</span>
                     </div>
