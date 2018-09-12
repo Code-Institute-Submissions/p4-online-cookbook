@@ -132,7 +132,11 @@ ul {
 /********************** footer */
 
 .footer {
-    padding: 2rem 1rem;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
     color: #efefef;
 }
 
