@@ -57,7 +57,7 @@ def login():
             return redirect(url_for('index'))
     else:
         # sign up was selected
-        return redirect(url_for('signup', filter_type='all', filter_cuisine='all', username=username_input))
+        return redirect(url_for('signup', username=username_input))
 
 
 @app.route('/signup/', methods=['GET', 'POST'], defaults={'username': None})
