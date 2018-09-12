@@ -1,0 +1,119 @@
+{% extends 'base.html' %} {% block content %}
+
+<section class="dashboard">
+
+    <p class="ml-3">Hello {{user.username}}!</p>
+
+    <div class="my-recipes">
+        <h2 class="ml-3"><small>My Recipes</small></h2>
+        <div class="recipe-cards">
+            <div class="row no-gutters">
+                {% for recipe in recipes %}
+                <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                    <div class="recipe-card">
+                        <div class="row h-100 no-gutters">
+                            <div class="col-2 text-center pl-2">
+                                <span class="d-block favs">
+                                    {% if '%s'|format(recipe._id) in user_favs %}
+                                    <a href="{{url_for('unfavourite', user_id=user._id, recipe_id=recipe._id, next=request.url)}}">
+                                        <i class="fas fa-heart"></i>
+                                    </a>
+                                    {% else %}
+                                    <a href="{{url_for('favourite', user_id=user._id, recipe_id=recipe._id, next=request.url)}}">
+                                        <i class="far fa-heart"></i>
+                                    </a>
+                                    {% endif %}
+                                </span>
+                                {{recipe.favourites|int}}
+                            </div>
+                            <div class="col-4">
+                                <div class="recipe-card-image mx-auto" style="background-image:url({{recipe.image_url}})">
+                                    <a class="d-block w-100 h-100" href="/recipe/{{recipe._id}}/{{user.username}}"></a>
+                                </div>
+                            </div>
+                            <div class="col-6 px-2">
+                                <div class="row h-50">
+                                    <div class="col">
+                                        <a class="d-block h-100 recipe-name" href="/recipe/{{recipe._id}}/{{user.username}}"><u>{{recipe.name}}</u></a>
+                                    </div>
+                                </div>
+                                <div class="row card-icons">
+                                    <div class="col">
+                                        <div class="card-icon">
+                                            <i class="far fa-edit"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="card-icon">
+                                            <i class="far fa-trash-alt"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+    <div class="favourite-recipes">
+        <h2 class="ml-3"><small>Favourite Recipes</small></h2>
+        <div class="recipe-cards">
+            <div class="row no-gutters">
+                {% for recipe in favourites %}
+                <div class="col-12 col-sm-10 col-md-6 col-lg-4">
+                    <div class="recipe-card">
+                        <div class="row h-100 no-gutters">
+                            <div class="col-2 text-center pl-2">
+                                <span class="d-block favs">
+                                    {% if user %}
+                                    {% if '%s'|format(recipe._id) in user_favs %}
+                                    <a href="{{url_for('unfavourite', user_id=user._id, recipe_id=recipe._id, next=request.url)}}">
+                                        <i class="fas fa-heart"></i>
+                                    </a>
+                                    {% else %}
+                                    <a href="{{url_for('favourite', user_id=user._id, recipe_id=recipe._id, next=request.url)}}">
+                                        <i class="far fa-heart"></i>
+                                    </a>
+                                    {% endif %}
+                                    {% else %}
+                                    <a href="{{url_for('signup')}}">
+                                        <i class="far fa-heart"></i>
+                                    </a>
+                                    {% endif %}
+                                </span>
+                                {{recipe.favourites|int}}
+                            </div>
+                            <div class="col-4">
+                                <div class="recipe-card-image mx-auto" style="background-image:url({{recipe.image_url}})">
+                                    {% if user %}
+                                    <a class="d-block w-100 h-100" href="/recipe/{{recipe._id}}/{{user.username}}"></a>
+                                    {% else %}
+                                    <a class="d-block w-100 h-100" href="/recipe/{{recipe._id}}"></a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-6 px-2">
+                                {% if user %}
+                                <a class="d-block mb-3" href="/recipe/{{recipe._id}}/{{user.username}}"><u>{{recipe.name}}</u></a>
+                                {% else %}
+                                <a class="d-block mb-3" href="/recipe/{{recipe._id}}"><u>{{recipe.name}}</u></a>
+                                {% endif %}
+
+                                <i class="fas fa-clock"></i>
+                                <span>{{recipe.time.hours|int}} h {{recipe.time.minutes|int}} m</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+</section>
+{% endblock %}

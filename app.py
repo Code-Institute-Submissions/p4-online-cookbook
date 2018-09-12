@@ -40,7 +40,6 @@ def index(filter_type, filter_cuisine, username):
             return redirect(url_for('index', filter_type=new_filters['type'], filter_cuisine=new_filters['cuisine']))
 
 
-
 @app.route('/login',  methods=['POST'])
 def login():
     """
@@ -86,6 +85,9 @@ def signup(username):
 
 @app.route('/logout/<username>')
 def logout(username):
+    """
+    Log user out
+    """
     flash('Goodbye %s! You have been logged out.' % username)
     return redirect(url_for('index'))
 
@@ -122,7 +124,18 @@ def recipe(recipe_id, username):
         return render_template("recipe.html", recipe=get_recipe(recipe_id), author=get_recipe_author(recipe_id))
 
 
+@app.route('/dashboard/<username>')
+def dashboard(username):
+    """
+    Render the dashboard where users can manage recipes
+    """
+    return render_template('dashboard.html', user=get_user_by_username(username), recipes=get_user_recipes(username), favourites=get_user_favourites(username))
+
+
 def get_recipe_author(recipe_id):
+    """
+    Get author username for a recipe
+    """
     return mongo.db.users.find_one({'my_recipes': {'$in': ['5b643f0dfb6fc072a40f32e4']}})['username']
 
 
@@ -213,11 +226,11 @@ def delete_user(user_id):
     mongo.db.users.delete_one({'_id': ObjectId(user_id)})
 
 
-def get_user_recipes(user_id):
+def get_user_recipes(username):
     """
     Get user's recipes from the database
     """
-    return mongo.db.recipes.find({'author': user_id})
+    return mongo.db.recipes.find({'author': '%s' % get_user_by_username(username)['_id']})
 
 
 def get_user_favourites(username):
@@ -241,8 +254,7 @@ def add_user_recipe_to_list(user_id, list_name, recipe_id):
     Add recipe id to user's my_recipes or favourite_recipes list
     """
     try:
-        mongo.db.users.update_one({'_id': ObjectId(user_id)}, {
-                                  '$push': {list_name: recipe_id}})
+        mongo.db.users.update_one({'_id': ObjectId(user_id)}, {'$push': {list_name: recipe_id}})
     except:
         print("Recipe id not added to user's list")
 
