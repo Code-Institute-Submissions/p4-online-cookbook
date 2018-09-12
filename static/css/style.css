@@ -147,6 +147,14 @@ main {
     margin-top: 11px;
 }
 
+.dashboard .card-icon a {
+    color: #fafafa;
+}
+
+.dashboard .card-icon a:hover {
+    color: #fafafa;
+}
+
 .dashboard .recipe-name {
     overflow: hidden;
     text-overflow: ellipsis;
