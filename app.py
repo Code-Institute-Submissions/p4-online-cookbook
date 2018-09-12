@@ -117,9 +117,13 @@ def recipe(recipe_id, username):
     Render the recipe page
     """
     if username:
-        return render_template("recipe.html", recipe=get_recipe(recipe_id), user=get_user_by_username(username))
+        return render_template("recipe.html", recipe=get_recipe(recipe_id), author=get_recipe_author(recipe_id), user=get_user_by_username(username), user_favs=get_user_favourites_ids(username))
     else:
-        return render_template("recipe.html", recipe=get_recipe(recipe_id))
+        return render_template("recipe.html", recipe=get_recipe(recipe_id), author=get_recipe_author(recipe_id))
+
+
+def get_recipe_author(recipe_id):
+    return mongo.db.users.find_one({'my_recipes': {'$in': ['5b643f0dfb6fc072a40f32e4']}})['username']
 
 
 def get_recipes():

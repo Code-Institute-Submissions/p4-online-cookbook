@@ -1,4 +1,66 @@
-/*************************** recipe cards */
+/********************** general */
+
+a {
+    color: #111111;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+/********************** recipe */
+
+.recipe .fa-heart {
+    margin-top: 1rem;
+}
+
+.recipe .favs {
+    font-size: 2rem;
+}
+
+.recipe-image {
+    height: 160px;
+    max-height: 160px;
+    width: 160px;
+    background-size: cover;
+}
+
+.recipe-image-overlay {
+    height: 30px;
+    max-height: 30px;
+    width: 160px;
+    background-color: black;
+    opacity: 0.6;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.recipe-image-overlay .author {
+    color: #fafafa;
+    margin-top: 3px;
+}
+
+.recipe .recipe-lists {
+    padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+    .recipe .recipe-lists {
+        padding: 0 4rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .recipe .recipe-lists {
+        padding: 0 8rem;
+    }
+}
+
+/********************** recipe cards */
+
 .recipe-card {
     margin: 1rem;
     border: 0.5px solid #bbb;
@@ -19,11 +81,8 @@
     background-size: cover;
 }
 
-.recipe-card a {
-    color: #111111;
-}
+/********************** signup */
 
-/*************************** signup */
 .signup .form-group {
     margin-bottom: 1.5rem;
 }

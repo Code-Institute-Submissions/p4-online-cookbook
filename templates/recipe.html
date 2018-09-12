@@ -1,20 +1,84 @@
 {% extends 'base.html' %} {% block content %}
 
-<div class="recipe">
+<section class="recipe">
 
-    <h3>{{recipe.name}}</h3>
-    <img src="{{recipe.image_url}}" alt="recipe image" width="200">
-    <p>Id: {{recipe._id}}</p>
-    <p>Time: {{recipe.time}}</p>
-    <p>Author: {{recipe.author}}</p>
-    <p>Description: {{recipe.description}}</p>
-    <p>Ingredients: {{recipe.ingredients}}</p>
-    <p>Method: {{recipe.method}}</p>
-    <p>Date Added: {{recipe.date_added}}</p>
-    <p>Favourites: {{recipe.favourites}}</p>
-    <p>Cuisine: {{recipe.cuisine}}</p>
-    <p>Type: {{recipe.type}}</p>
+    <div class="row mt-3 h-100 no-gutters justify-content-center align-items-center">
+        <div class="col-3 col-sm-2 col-lg-1 text-center pl-2">
+            <span class="d-block favs">
+                {% if user %}
+                {% if '%s'|format(recipe._id) in user_favs %}
+                <a href="{{url_for('unfavourite', user_id=user._id, recipe_id=recipe._id, next=request.url)}}">
+                    <i class="fas fa-heart"></i>
+                </a>
+                {% else %}
+                <a href="{{url_for('favourite', user_id=user._id, recipe_id=recipe._id, next=request.url)}}">
+                    <i class="far fa-heart"></i>
+                </a>
+                {% endif %}
+                {% else %}
+                <a href="{{url_for('signup')}}">
+                    <i class="far fa-heart"></i>
+                </a>
+                {% endif %}
+            </span>
+            {{recipe.favourites|int}}
+        </div>
+        <div class="col-6 col-sm-4 col-lg-3">
+            <div class="recipe-image-overlay mx-auto">
+                <p class="author text-center">@{{author}}</p>
+            </div>
+            <div class="recipe-image mx-auto" style="background-image:url({{recipe.image_url}})">
+            </div>
+        </div>
+        <div class="col-3 col-sm-2 col-lg-1 px-2 text-center">
+            <i class="fas fa-clock"></i>
+            <p>{{recipe.time.hours|int}} h {{recipe.time.minutes|int}} m</p>
+        </div>
+    </div>
 
-</div>
+    <div class="row mt-3 justify-content-center text-center">
+        <div class="col-12 col-md-10 col-lg-8 my-2">
+            <h2>{{recipe.name}}</h2>
+        </div>
+        <div class="col-12 col-md-10 col-lg-8 my-2 px-4">
+            <p class="mb-0">{{recipe.description}}</p>
+        </div>
+    </div>
+
+    <div class="row mt-3 justify-content-center text-center recipe-stats">
+        <div class="col-4 col-md-3 col-lg-2">
+            <i class="fas fa-calendar-alt"></i>
+            <span class="ml-2"><small>{{recipe.date_added[4:15]}}</small></span>
+        </div>
+        <div class="col-4 col-md-3 col-lg-2">
+            <i class="fas fa-utensils"></i>
+            <span class="ml-2"><small>{{recipe.type}}</small></span>
+        </div>
+        <div class="col-4 col-md-3 col-lg-2">
+            <i class="fas fa-flag"></i>
+            <span class="ml-2"><small>{{recipe.cuisine}}</small></span>
+        </div>
+    </div>
+
+    <div class="row mt-4 recipe-lists justify-content-center">
+        <div class="ingredients col-10 offset-1 col-sm-4 offset-sm-0 col-lg-4 col-xl-3 my-2">
+            <h4 class="text-uppercase">Ingredients</h4>
+            <ul>
+                {% for item in recipe.ingredients %}
+                <li>{{item}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="method col-10 offset-1 col-sm-8 offset-sm-0 col-lg-7 my-2">
+            <h4 class="text-uppercase">Method</h4>
+            <ul>
+                {% for item in recipe.method %}
+                <li>{{item}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+</section>
 
 {% endblock %}
