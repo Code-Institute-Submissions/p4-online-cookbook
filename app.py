@@ -12,6 +12,8 @@ app.config["MONGO_URI"] = os.getenv('MONGO_URI')
 mongo = PyMongo(app)
 
 
+# ROUTES
+
 @app.route('/', methods=['GET', 'POST'], defaults={'filter_type': 'all', 'filter_cuisine': 'all', 'username': None})
 @app.route('/<filter_type>/<filter_cuisine>', defaults={'username': None})
 @app.route('/<filter_type>/<filter_cuisine>/<username>', methods=['GET', 'POST'])
@@ -112,7 +114,7 @@ def unfavourite(user_id, recipe_id):
     return redirect(request.args.get('next'))
 
 
-@app.route('/recipe/<recipe_id>/', defaults={'username':None})
+@app.route('/recipe/<recipe_id>/', defaults={'username': None})
 @app.route('/recipe/<recipe_id>/<username>')
 def recipe(recipe_id, username):
     """
@@ -131,6 +133,16 @@ def dashboard(username):
     """
     return render_template('dashboard.html', user=get_user_by_username(username), recipes=get_user_recipes(username), favourites=get_user_favourites(username))
 
+
+@app.route('/edit/<recipe_id>')
+def edit(recipe_id):
+    """
+    Render the edit template where the user can make changes to a recipe
+    """
+    return render_template('edit.html', recipe=get_recipe(recipe_id))
+
+
+# FUNCTIONS
 
 def get_recipe_author(recipe_id):
     """
@@ -254,7 +266,8 @@ def add_user_recipe_to_list(user_id, list_name, recipe_id):
     Add recipe id to user's my_recipes or favourite_recipes list
     """
     try:
-        mongo.db.users.update_one({'_id': ObjectId(user_id)}, {'$push': {list_name: recipe_id}})
+        mongo.db.users.update_one({'_id': ObjectId(user_id)}, {
+                                  '$push': {list_name: recipe_id}})
     except:
         print("Recipe id not added to user's list")
 
