@@ -1,83 +1,98 @@
 {% extends 'base.html' %} {% block content %}
 
 <section class="edit">
-
-    <div class="row mt-3 h-100 no-gutters justify-content-center align-items-center">
-        <div class="col-3 col-sm-2 col-lg-1 text-center pl-2">
-            <span class="d-block favs">
-                {% if user %}
-                {% if '%s'|format(recipe._id) in user_favs %}
-                <a href="{{url_for('unfavourite', user_id=user._id, recipe_id=recipe._id, next=request.url)}}">
-                    <i class="fas fa-heart"></i>
-                </a>
-                {% else %}
-                <a href="{{url_for('favourite', user_id=user._id, recipe_id=recipe._id, next=request.url)}}">
-                    <i class="far fa-heart"></i>
-                </a>
-                {% endif %}
-                {% else %}
-                <a href="{{url_for('signup')}}">
-                    <i class="far fa-heart"></i>
-                </a>
-                {% endif %}
-            </span>
-            {{recipe.favourites|int}}
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+            <h3 class="text-uppercase my-4">Update Recipe</h3>
         </div>
-        <div class="col-6 col-sm-4 col-lg-3">
-            <div class="recipe-image-overlay mx-auto">
-                <p class="author text-center">@{{author}}</p>
-            </div>
-            <div class="recipe-image mx-auto" style="background-image:url({{recipe.image_url}})">
-            </div>
-        </div>
-        <div class="col-3 col-sm-2 col-lg-1 px-2 text-center">
-            <i class="fas fa-clock"></i>
-            <p>{{recipe.time.hours|int}} h {{recipe.time.minutes|int}} m</p>
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+            <form action="{{url_for('edit', recipe_id=recipe._id)}}" method="POST">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" id="title" placeholder="{{recipe.name}}" name="title">
+                </div>
+                <div class="form-group">
+                    <label for="image_url">Image URL</label>
+                    <input type="text" class="form-control" id="image_url" placeholder="{{recipe.image_url}}" name="image_url">
+                </div>
+                <div class="form-row">
+                    <div class="col-2">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="col col-sm-3 col-md-2">
+                        <div class="form-group">
+                            <label for="hours">Hours</label>
+                            <select name="hours" class="form-control" id="hours">
+                                {% for i in range(0,25) %}
+                                <option {{ 'selected' if (recipe.time.hours == i) }}>{{i}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col col-sm-3 col-md-2">
+                        <div class="form-group">
+                            <label for="minutes">Minutes</label>
+                            <select name="minutes" class="form-control" id="minutes">
+                                {% for i in range(0,60) %}
+                                <option {{ 'selected' if (recipe.time.minutes == i) }}>{{i}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea name="description" class="form-control" id="description" rows="3">{{recipe.description}}</textarea>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="type">Type</label>
+                            <select name="type" class="form-control" id="type">
+                                <option {{ 'selected' if (recipe.type == 'starter') }}>Starter</option>
+                                <option {{ 'selected' if (recipe.type == 'soup') }}>Soup</option>
+                                <option {{ 'selected' if (recipe.type == 'salad') }}>Salad</option>
+                                <option {{ 'selected' if (recipe.type == 'main course') }}>Main Course</option>
+                                <option {{ 'selected' if (recipe.type == 'dessert') }}>Dessert</option>
+                                <option {{ 'selected' if (recipe.type == 'cake') }}>Cake</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="cuisine">Cuisine</label>
+                            <select name="cuisine" class="form-control" id="cuisine">
+                                <option {{ 'selected' if (recipe.cuisine == 'indian') }}>Indian</option>
+                                <option {{ 'selected' if (recipe.cuisine == 'chinese') }}>Chinese</option>
+                                <option {{ 'selected' if (recipe.cuisine == 'italian') }}>Italian</option>
+                                <option {{ 'selected' if (recipe.cuisine == 'french') }}>French</option>
+                                <option {{ 'selected' if (recipe.cuisine == 'spanish') }}>Spanish</option>
+                                <option {{ 'selected' if (recipe.cuisine == 'asian') }}>Asian</option>
+                                <option {{ 'selected' if (recipe.cuisine == 'african') }}>African</option>
+                                <option {{ 'selected' if (recipe.cuisine == 'british') }}>British</option>
+                                <option {{ 'selected' if (recipe.cuisine == 'american') }}>American</option>
+                                <option {{ 'selected' if (recipe.cuisine == 'irish') }}>Irish</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="ingredients">Ingredients</label>
+                    <textarea name="ingredients" class="form-control" id="ingredients" rows="{{recipe.ingredients|length}}">{% for item in recipe.ingredients %}{{"%s\n"|format(item)}}{% endfor %}</textarea>
+                    <small class="form-text text-muted">Use a new line for each ingredient</small>
+                </div>
+                <div class="form-group">
+                    <label for="method">Method</label>
+                    <textarea name="method" class="form-control" id="method" rows="6">{% for item in recipe.method %}{{"%s\n"|format(item)}}{% endfor %}</textarea>
+                    <small class="form-text text-muted">Use a new line for each step</small>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-outline-primary">Update Recipe</button>
+                </div>
+            </form>
         </div>
     </div>
 
-    <div class="row mt-3 justify-content-center text-center">
-        <div class="col-12 col-md-10 col-lg-8 my-2">
-            <h2>{{recipe.name}}</h2>
-        </div>
-        <div class="col-12 col-md-10 col-lg-8 my-2 px-4">
-            <p class="mb-0">{{recipe.description}}</p>
-        </div>
-    </div>
-
-    <div class="row mt-3 justify-content-center text-center recipe-stats">
-        <div class="col-4 col-md-3 col-lg-2">
-            <i class="fas fa-calendar-alt"></i>
-            <span class="ml-2"><small>{{recipe.date_added[4:15]}}</small></span>
-        </div>
-        <div class="col-4 col-md-3 col-lg-2">
-            <i class="fas fa-utensils"></i>
-            <span class="ml-2"><small>{{recipe.type}}</small></span>
-        </div>
-        <div class="col-4 col-md-3 col-lg-2">
-            <i class="fas fa-flag"></i>
-            <span class="ml-2"><small>{{recipe.cuisine}}</small></span>
-        </div>
-    </div>
-
-    <div class="row mt-4 recipe-lists justify-content-center">
-        <div class="ingredients col-10 offset-1 col-sm-4 offset-sm-0 col-lg-4 col-xl-3 my-2">
-            <h4 class="text-uppercase">Ingredients</h4>
-            <ul>
-                {% for item in recipe.ingredients %}
-                <li>{{item}}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="method col-10 offset-1 col-sm-8 offset-sm-0 col-lg-7 my-2">
-            <h4 class="text-uppercase">Method</h4>
-            <ul>
-                {% for item in recipe.method %}
-                <li>{{item}}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
 
 </section>
 

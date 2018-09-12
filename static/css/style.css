@@ -159,3 +159,11 @@ main {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+/********************** edit */
+
+.edit .fa-clock {
+    margin-top: 2rem;
+    margin-left: 0.5rem;
+    font-size: 2rem;
+}
