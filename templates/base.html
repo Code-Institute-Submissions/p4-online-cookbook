@@ -21,8 +21,8 @@
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <header class="mb-3">
+        <nav class="navbar navbar-expand-md navbar-light bg-header">
             {% if user %}
             <a class="navbar-brand" href="{{url_for('index', filter_type='all', filter_cuisine='all', username=user['username'])}}">Online Cookbook</a>
             {% else %}
@@ -78,6 +78,12 @@
     <div class="container-fluid">
         {% block content %} {% endblock %}
     </div>
+
+    <footer class="footer bg-footer">
+        <div class="container">
+            <span><i class="fab fa-github"></i> Student project by <a href="https://github.com/sarahloh">@sarahloh</a></span>
+        </div>
+    </footer>
 
     <!-- javascript -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

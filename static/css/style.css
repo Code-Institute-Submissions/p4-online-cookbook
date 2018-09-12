@@ -1,12 +1,26 @@
 /********************** general */
 
 a {
-    color: #111111;
+    color: darkslategrey;
+}
+
+a:hover {
+    text-decoration: none;
 }
 
 ul {
     list-style-type: none;
     padding-left: 0;
+}
+
+/********************** colours */
+
+.bg-header {
+    background-color: lightgrey;
+}
+
+.bg-footer {
+    background-color: grey;
 }
 
 /********************** recipe */
@@ -85,4 +99,15 @@ ul {
 
 .signup .form-group {
     margin-bottom: 1.5rem;
+}
+
+/********************** colours */
+
+.footer {
+    padding: 2rem 1rem;
+    color: #efefef;
+}
+
+.footer a {
+    color: #efefef;
 }
