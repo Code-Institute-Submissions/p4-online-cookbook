@@ -1,7 +1,4 @@
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
+/*************************** recipe cards */
 .recipe-card {
     margin: 1rem;
     border: 0.5px solid #bbb;
@@ -24,4 +21,9 @@
 
 .recipe-card a {
     color: #111111;
+}
+
+/*************************** signup */
+.signup .form-group {
+    margin-bottom: 1.5rem;
 }

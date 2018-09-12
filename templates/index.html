@@ -4,39 +4,45 @@
 
     {% if user %}
     <form action="{{url_for('index', filter_type='all', filter_cuisine='all', username=user.username)}}" method="POST">
-    {% else %}
-    <form action="{{url_for('index')}}" method="POST">
-    {% endif %}
-        <div class="form-group">
-            <label for="inputType">Dish Type</label>
-            <select id="inputType" name="type" class="form-control">
-                <option {{ 'selected' if (filters.type == 'all') }}>All</option>
-                <option {{ 'selected' if (filters.type == 'starter') }}>Starter</option>
-                <option {{ 'selected' if (filters.type == 'soup') }}>Soup</option>
-                <option {{ 'selected' if (filters.type == 'salad') }}>Salad</option>
-                <option {{ 'selected' if (filters.type == 'main course') }}>Main Course</option>
-                <option {{ 'selected' if (filters.type == 'dessert') }}>Dessert</option>
-                <option {{ 'selected' if (filters.type == 'cake') }}>Cake</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="inputCuisine">Cuisine</label>
-            <select id="inputCuisine" name="cuisine" class="form-control">
-                <option {{ 'selected' if (filters.cuisine == 'all') }}>All</option>
-                <option {{ 'selected' if (filters.cuisine == 'indian') }}>Indian</option>
-                <option {{ 'selected' if (filters.cuisine == 'chinese') }}>Chinese</option>
-                <option {{ 'selected' if (filters.cuisine == 'italian') }}>Italian</option>
-                <option {{ 'selected' if (filters.cuisine == 'french') }}>French</option>
-                <option {{ 'selected' if (filters.cuisine == 'spanish') }}>Spanish</option>
-                <option {{ 'selected' if (filters.cuisine == 'asian') }}>Asian</option>
-                <option {{ 'selected' if (filters.cuisine == 'african') }}>African</option>
-                <option {{ 'selected' if (filters.cuisine == 'british') }}>British</option>
-                <option {{ 'selected' if (filters.cuisine == 'american') }}>American</option>
-                <option {{ 'selected' if (filters.cuisine == 'irish') }}>Irish</option>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Apply Filters</button>
-    </form>
+        {% else %}
+        <form action="{{url_for('index')}}" method="POST">
+            {% endif %}
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="inputType">Dish Type</label>
+                        <select id="inputType" name="type" class="form-control">
+                            <option {{ 'selected' if (filters.type == 'all') }}>All</option>
+                            <option {{ 'selected' if (filters.type == 'starter') }}>Starter</option>
+                            <option {{ 'selected' if (filters.type == 'soup') }}>Soup</option>
+                            <option {{ 'selected' if (filters.type == 'salad') }}>Salad</option>
+                            <option {{ 'selected' if (filters.type == 'main course') }}>Main Course</option>
+                            <option {{ 'selected' if (filters.type == 'dessert') }}>Dessert</option>
+                            <option {{ 'selected' if (filters.type == 'cake') }}>Cake</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="inputCuisine">Cuisine</label>
+                        <select id="inputCuisine" name="cuisine" class="form-control">
+                            <option {{ 'selected' if (filters.cuisine == 'all') }}>All</option>
+                            <option {{ 'selected' if (filters.cuisine == 'indian') }}>Indian</option>
+                            <option {{ 'selected' if (filters.cuisine == 'chinese') }}>Chinese</option>
+                            <option {{ 'selected' if (filters.cuisine == 'italian') }}>Italian</option>
+                            <option {{ 'selected' if (filters.cuisine == 'french') }}>French</option>
+                            <option {{ 'selected' if (filters.cuisine == 'spanish') }}>Spanish</option>
+                            <option {{ 'selected' if (filters.cuisine == 'asian') }}>Asian</option>
+                            <option {{ 'selected' if (filters.cuisine == 'african') }}>African</option>
+                            <option {{ 'selected' if (filters.cuisine == 'british') }}>British</option>
+                            <option {{ 'selected' if (filters.cuisine == 'american') }}>American</option>
+                            <option {{ 'selected' if (filters.cuisine == 'irish') }}>Irish</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm">Apply Filters</button>
+        </form>
 
 </div>
 
@@ -69,7 +75,7 @@
                     <div class="col-4">
                         <div class="recipe-card-image mx-auto" style="background-image:url({{recipe.image_url}})">
                             {% if user %}
-                                <a class="d-block w-100 h-100" href="/recipe/{{recipe._id}}/{{user.username}}"></a>
+                            <a class="d-block w-100 h-100" href="/recipe/{{recipe._id}}/{{user.username}}"></a>
                             {% else %}
                             <a class="d-block w-100 h-100" href="/recipe/{{recipe._id}}"></a>
                             {% endif %}
