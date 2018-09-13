@@ -146,6 +146,14 @@ def edit(recipe_id, username):
         return redirect(url_for('recipe', recipe_id=recipe_id, username=username))
 
 
+@app.route('/delete/<recipe_id>/<username>')
+def delete(recipe_id, username):
+    """
+    Remove a recipe from the database
+    """
+    delete_recipe(recipe_id, username)
+    return redirect(url_for('dashboard', username=username))
+
 # FUNCTIONS
 
 def get_recipe_author(recipe_id):
@@ -210,12 +218,19 @@ def update_recipe(recipe_id,recipe_form):
     }})
 
 
-def delete_recipe(recipe_id):
+def delete_recipe(recipe_id, username):
     """
     Remove a recipe from the database based on its id
     """
     try:
         mongo.db.recipes.delete_one({'_id': ObjectId(recipe_id)})
+        author_id = get_user_by_username(username)['_id']
+        remove_user_recipe_from_list(author_id, 'my_recipes', recipe_id)
+        for user in get_users():
+            if recipe_id in user['favourite_recipes']:
+                remove_user_recipe_from_list(
+                    user['_id'], 'favourite_recipes', recipe_id)
+        print('deleted')
     except:
         print('Recipe with id %s was not deleted' % recipe_id)
 

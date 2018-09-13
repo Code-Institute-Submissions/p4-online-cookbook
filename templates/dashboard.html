@@ -47,7 +47,9 @@
                                     </div>
                                     <div class="col">
                                         <div class="card-icon">
-                                            <i class="far fa-trash-alt"></i>
+                                            <a href="{{ url_for('delete', recipe_id=recipe._id, username=user.username) }}" class="d-block w-100 h-100">
+                                                <i class="far fa-trash-alt"></i>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
