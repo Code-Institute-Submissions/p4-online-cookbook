@@ -140,9 +140,9 @@ def edit(recipe_id):
     Render the edit template where the user can make changes to a recipe
     """
     if request.method == 'GET':
-       return render_template('edit.html', recipe=get_recipe(recipe_id))
+        return render_template('edit.html', recipe=get_recipe(recipe_id))
     else:
-        print(request.form)
+        update_recipe(recipe_id, request.form)
         return redirect(url_for('recipe', recipe_id=recipe_id))
 
 
@@ -190,11 +190,24 @@ def get_recipe(recipe_id):
     return mongo.db.recipes.find_one({'_id': ObjectId(recipe_id)})
 
 
-def update_recipe(recipe):
+def update_recipe(recipe_id,recipe_form):
     """
     Update recipe in the datebase
     """
-    mongo.db.recipes.replace_one({'_id': recipe['_id']}, recipe)
+    mongo.db.recipes.update_one({'_id': ObjectId(recipe_id)}, {
+        '$set': {
+            'name': recipe_form['name'],
+            'time': {
+                'hours': recipe_form['hours'],
+                'minutes': recipe_form['minutes']
+            },
+            'description': recipe_form['description'],
+            'ingredients': recipe_form['ingredients'].split('\r\n')[:-1],
+            'method': recipe_form['method'].split('\r\n')[:-1],
+            'image_url': recipe_form['image_url'],
+            'cuisine': recipe_form['cuisine'],
+            'type': recipe_form['type']
+    }})
 
 
 def delete_recipe(recipe_id):
