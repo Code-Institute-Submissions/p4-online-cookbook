@@ -111,7 +111,8 @@ class TestCookbook(unittest.TestCase):
         Test to ensure we can remove a recipe from the database
         """
         recipe_id = '000000000000000000000001'
-        app.delete_recipe(recipe_id)
+        username = 'sarahloh'
+        app.delete_recipe(recipe_id, username)
         self.assertNotIn(app.get_recipe(recipe_id),list(app.get_recipes()))
 
     def test_get_users(self):
