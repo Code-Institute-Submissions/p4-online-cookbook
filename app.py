@@ -198,8 +198,8 @@ def update_recipe(recipe_id,recipe_form):
         '$set': {
             'name': recipe_form['name'],
             'time': {
-                'hours': recipe_form['hours'],
-                'minutes': recipe_form['minutes']
+                'hours': int(recipe_form['hours']),
+                'minutes': int(recipe_form['minutes'])
             },
             'description': recipe_form['description'],
             'ingredients': recipe_form['ingredients'].split('\r\n')[:-1],
