@@ -154,6 +154,18 @@ def delete(recipe_id, username):
     delete_recipe(recipe_id, username)
     return redirect(url_for('dashboard', username=username))
 
+
+@app.route('/add/<username>', methods=['GET', 'POST'])
+def add(username):
+    """
+    Handle GET and POST requests for add recipe
+    """
+    if request.method == "GET":
+        return render_template('add.html', user=get_user_by_username(username))
+    else:
+        return redirect(url_for('recipe', recipe_id=recipe_id, username=username))
+
+
 # FUNCTIONS
 
 def get_recipe_author(recipe_id):

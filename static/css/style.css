@@ -143,8 +143,9 @@ main {
 }
 
 .dashboard .card-icon i {
-    margin-left: 13px;
-    margin-top: 11px;
+    margin-left: 12px;
+    margin-top: 10px;
+    font-size: 1.2rem;
 }
 
 .dashboard .card-icon a {
