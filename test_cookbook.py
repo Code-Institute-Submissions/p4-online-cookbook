@@ -88,11 +88,23 @@ class TestCookbook(unittest.TestCase):
         """
         Test to ensure we can update a recipe in the database
         """
-        recipe = app.get_recipe('5b91483146073f953359fce8')
-        recipe['favourites'] = 289
-        app.update_recipe(recipe)
-        self.assertEqual(app.get_recipe(
-            recipe['_id'])['favourites'], 289)
+        recipe_id = '5b91483146073f953359fce8'
+        recipe_form = {
+            "name": "Chocolate Soufflé",
+            "hours": 0,
+            "minutes": 30,
+            "description": "So easy to make and so yummy!",
+            "ingredients": "A little melted butter and caster sugar for coating the souffle dish\r\n75g (2 1/2 oz) plain chocolate\r\n1 tablespoon milk\r\n50g (2 oz) butter\r\n40g (1 1/2 oz) plain flour\r\n300ml milk\r\n1/2 tsp cinnamon powder\r\n5 eggs, seperated into yolks and whites\r\n2 tablespoons of caster sugar\r\n",
+            "method": "Preheat over to 200 degrees C / gas mark 6.\r\nGrease an 8 inch souffle dish (or 4 small individual ramekins) with melted butter and dust with sugar.\r\nPut 1 tablespoon of milk and the chocolate in a heat-proof bowl and melt over hot boiling water. Set aside.\r\nMelt butter in a saucepan over gentle heat, then add the flour all at once; mix well and remove from the heat.\r\nAdd milk into flour mixture a little at a time, stirring constantly until the mixture forms a creamy paste.\r\nAdd melted chocolate, cinnamon and all five egg yolks. Mix well and set aside.\r\nWhisk five egg whites and add sugar, 1 tablespoon at a time. Keep whisking until egg whites look like foamy bubbles.\r\nSlowly add whisked egg whites into chocolate mixture. Pour into souffle dish and bake for 20 minutes.\r\nServe immediately.\r\n",
+            "image_url": "http://ukcdn.ar-cdn.com/recipes/port250/67608ebb-163e-4682-b2f2-66e982331c3b.jpg",
+            "cuisine": "french",
+            "type": "dessert"
+        }
+        app.update_recipe(recipe_id, recipe_form)
+        self.assertEqual(app.get_recipe(recipe_id)['name'], 'Chocolate Soufflé')
+        #reset after test
+        recipe_form['name'] = 'Cinnamon Chocolate Soufflé'
+        app.update_recipe(recipe_id, recipe_form)
 
     def test_delete_recipe(self):
         """
@@ -143,9 +155,9 @@ class TestCookbook(unittest.TestCase):
         """
         Test to ensure we can get users' recipes
         """
-        user_id = "5b648d93fb6fc072a40f6d8f"
+        username = "sarahloh"
         self.assertIn(app.get_recipe('5b91483146073f953359fce8'),
-                      list(app.get_user_recipes(user_id)))
+                      list(app.get_user_recipes(username)))
 
     def test_get_user_favourites(self):
         """
@@ -159,10 +171,11 @@ class TestCookbook(unittest.TestCase):
         """
         Test to ensure we can remove a recipe id from a user's list of recipes
         """
+        username = "sarahloh"
         user_id = "5b648d93fb6fc072a40f6d8f"
         recipe_id = "5b8fc23a59d1979fc3608b0a"
         app.remove_user_recipe_from_list(user_id, 'my_recipes', recipe_id)
-        self.assertNotIn(recipe_id, list(app.get_user_recipes(user_id)))
+        self.assertNotIn(recipe_id, list(app.get_user_recipes(username)))
 
         # re-add recipe after test
         app.add_user_recipe_to_list(user_id, 'my_recipes', recipe_id)
@@ -171,6 +184,7 @@ class TestCookbook(unittest.TestCase):
         """
         Test to ensure we can add a recipe id to a user's list of recipes
         """
+        username = "sarahloh"
         user_id = "5b648d93fb6fc072a40f6d8f"
         recipe_id = "5b8fc23a59d1979fc3608b0a"
 
@@ -179,17 +193,18 @@ class TestCookbook(unittest.TestCase):
 
         app.add_user_recipe_to_list(user_id, 'my_recipes', recipe_id)
         self.assertIn(app.get_recipe(recipe_id),
-                      list(app.get_user_recipes(user_id)))
+                      list(app.get_user_recipes(username)))
 
     def test_remove_user_favourite(self):
         """
         Test to ensure we can remove a recipe id from a user's favourites list
         """
+        username = "sarahloh"
         user_id = "5b648d93fb6fc072a40f6d8f"
         recipe_id = "5b8fc23a59d1979fc3608b09"
         app.remove_user_recipe_from_list(
             user_id, 'favourite_recipes', recipe_id)
-        self.assertNotIn(recipe_id, list(app.get_user_recipes(user_id)))
+        self.assertNotIn(recipe_id, list(app.get_user_recipes(username)))
 
         # re-add recipe after test
         app.add_user_recipe_to_list(user_id, 'favourite_recipes', recipe_id)
@@ -198,6 +213,7 @@ class TestCookbook(unittest.TestCase):
         """
         Test to ensure we can add a recipe id to a user's favourites list
         """
+        username = "sarahloh"
         user_id = "5b648d93fb6fc072a40f6d8f"
         recipe_id = "5b8fc23a59d1979fc3608b09"
 
@@ -207,7 +223,7 @@ class TestCookbook(unittest.TestCase):
 
         app.add_user_recipe_to_list(user_id, 'favourite_recipes', recipe_id)
         self.assertIn(app.get_recipe(recipe_id),
-                      list(app.get_user_recipes(user_id)))
+                      list(app.get_user_recipes(username)))
 
     def test_favourite_a_recipe(self):
         """
