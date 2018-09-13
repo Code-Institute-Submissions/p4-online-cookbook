@@ -134,16 +134,16 @@ def dashboard(username):
     return render_template('dashboard.html', user=get_user_by_username(username), recipes=get_user_recipes(username), favourites=get_user_favourites(username))
 
 
-@app.route('/edit/<recipe_id>', methods=['GET', 'POST'])
-def edit(recipe_id):
+@app.route('/edit/<recipe_id>/<username>', methods=['GET', 'POST'])
+def edit(recipe_id, username):
     """
     Render the edit template where the user can make changes to a recipe
     """
     if request.method == 'GET':
-        return render_template('edit.html', recipe=get_recipe(recipe_id))
+        return render_template('edit.html', recipe=get_recipe(recipe_id), user=get_user_by_username(username))
     else:
         update_recipe(recipe_id, request.form)
-        return redirect(url_for('recipe', recipe_id=recipe_id))
+        return redirect(url_for('recipe', recipe_id=recipe_id), username=get_user_by_username(username))
 
 
 # FUNCTIONS
