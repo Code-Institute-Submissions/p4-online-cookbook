@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template, redirect, request, url_for, flash
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+import datetime
 
 app = Flask(__name__)
 app.secret_key = os.getenv('APP_SECRET_FLASH')
@@ -163,6 +164,10 @@ def add(username):
     if request.method == "GET":
         return render_template('add.html', user=get_user_by_username(username))
     else:
+        recipe_id = add_recipe(request.form, username).inserted_id
+        recipe_id = '%s'%recipe_id
+        print(get_recipe(recipe_id))
+        add_user_recipe_to_list(get_user_by_username(username)['_id'], 'my_recipes', recipe_id)
         return redirect(url_for('recipe', recipe_id=recipe_id, username=username))
 
 
@@ -172,7 +177,7 @@ def get_recipe_author(recipe_id):
     """
     Get author username for a recipe
     """
-    return mongo.db.users.find_one({'my_recipes': {'$in': ['5b643f0dfb6fc072a40f32e4']}})['username']
+    return mongo.db.users.find_one({'my_recipes': {'$in': [recipe_id]}})['username']
 
 
 def get_recipes():
@@ -196,11 +201,29 @@ def get_recipes_by_filters(filters):
         return mongo.db.recipes.find({'type': filters['type'], 'cuisine': filters['cuisine']})
 
 
-def add_recipe(recipe):
+def add_recipe(recipe_form, username):
     """
     Add new recipe to the database
     """
-    mongo.db.recipes.insert_one(recipe)
+    try:
+        return mongo.db.recipes.insert_one({
+            'name': recipe_form['name'],
+            'time': {
+                'hours': int(recipe_form['hours']),
+                'minutes': int(recipe_form['minutes'])
+            },
+            'author': get_user_by_username(username)['_id'],
+            'description': recipe_form['description'],
+            'ingredients': recipe_form['ingredients'].split('\r\n'),
+            'method': recipe_form['method'].split('\r\n'),
+            'image_url': recipe_form['image_url'],
+            'date_added': str(datetime.datetime.now()),
+            'favourites': 0,
+            'cuisine': recipe_form['cuisine'],
+            'type': recipe_form['type']
+        })
+    except:
+        print("Error adding recipe to database")
 
 
 def get_recipe(recipe_id):

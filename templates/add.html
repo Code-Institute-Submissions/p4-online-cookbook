@@ -1,0 +1,101 @@
+{% extends 'base.html' %} {% block content %}
+
+<section class="add">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+            <h3 class="text-uppercase my-4">Add Recipe</h3>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+            <form action="{{url_for('add', username=user.username)}}" method="POST">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" id="title" name="name">
+                </div>
+                <div class="form-group">
+                    <label for="image_url">Image URL</label>
+                    <input type="text" class="form-control" id="image_url" name="image_url">
+                </div>
+                <div class="form-row">
+                    <div class="col-2">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="col col-sm-3 col-md-2">
+                        <div class="form-group">
+                            <label for="hours">Hours</label>
+                            <select name="hours" class="form-control" id="hours">
+                                {% for i in range(0,25) %}
+                                <option>{{i}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col col-sm-3 col-md-2">
+                        <div class="form-group">
+                            <label for="minutes">Minutes</label>
+                            <select name="minutes" class="form-control" id="minutes">
+                                {% for i in range(0,60) %}
+                                <option>{{i}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea name="description" class="form-control" id="description" rows="3"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="type">Type</label>
+                            <select name="type" class="form-control" id="type">
+                                <option>Starter</option>
+                                <option>Soup</option>
+                                <option>Salad</option>
+                                <option>Main Course</option>
+                                <option>Dessert</option>
+                                <option>Cake</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="cuisine">Cuisine</label>
+                            <select name="cuisine" class="form-control" id="cuisine">
+                                <option>Indian</option>
+                                <option>Chinese</option>
+                                <option>Italian</option>
+                                <option>French</option>
+                                <option>Spanish</option>
+                                <option>Asian</option>
+                                <option>African</option>
+                                <option>British</option>
+                                <option>American</option>
+                                <option>Irish</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="ingredients">Ingredients</label>
+                    <textarea name="ingredients" class="form-control" id="ingredients" rows="6"></textarea>
+                    <small class="form-text text-muted">Use a new line for each ingredient</small>
+                </div>
+                <div class="form-group">
+                    <label for="method">Method</label>
+                    <textarea name="method" class="form-control" id="method" rows="6"></textarea>
+                    <small class="form-text text-muted">Use a new line for each step</small>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-outline-success">Add Recipe</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</section>
+
+{% endblock %}

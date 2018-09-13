@@ -43,7 +43,7 @@
                     </li>
                     {% if user %}
                     <li class="nav-item my-2">
-                        <a class="nav-link" href="/login">Add Recipe</a>
+                        <a class="nav-link" href="{{url_for('add', username=user.username)}}">Add Recipe</a>
                     </li>
                     <li class="nav-item my-2">
                         <a class="nav-link" href="{{url_for('dashboard', username=user['username'])}}">Manage Recipes</a>
