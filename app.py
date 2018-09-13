@@ -143,7 +143,7 @@ def edit(recipe_id, username):
         return render_template('edit.html', recipe=get_recipe(recipe_id), user=get_user_by_username(username))
     else:
         update_recipe(recipe_id, request.form)
-        return redirect(url_for('recipe', recipe_id=recipe_id, username=get_user_by_username(username)))
+        return redirect(url_for('recipe', recipe_id=recipe_id, username=username))
 
 
 # FUNCTIONS
@@ -273,8 +273,7 @@ def get_user_favourites_ids(username):
     """
     Get a list of ids for a user's favourite recipes from the database
     """
-    favourites_ids = list(mongo.db.users.find_one({"username": username}, {
-        "_id": 0, "name": 0, "username": 0, "my_recipes": 0})['favourite_recipes']) if username else []
+    favourites_ids = list(mongo.db.users.find_one({"username": username}, {"_id": 0, "name": 0, "username": 0, "my_recipes": 0})['favourite_recipes']) if username else []
     return favourites_ids
 
 
