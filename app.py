@@ -143,7 +143,7 @@ def edit(recipe_id, username):
         return render_template('edit.html', recipe=get_recipe(recipe_id), user=get_user_by_username(username))
     else:
         update_recipe(recipe_id, request.form)
-        return redirect(url_for('recipe', recipe_id=recipe_id), username=get_user_by_username(username))
+        return redirect(url_for('recipe', recipe_id=recipe_id, username=get_user_by_username(username)))
 
 
 # FUNCTIONS
