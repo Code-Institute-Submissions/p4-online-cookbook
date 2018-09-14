@@ -1,7 +1,9 @@
 {% extends 'base.html' %} {% block content %}
 
 <section class="recipe">
-
+    {% if back_to_list %}
+    <p><u><a href="{{back_to_list}}">Back to list</a></u></p>
+    {% endif %}
     <div class="row mt-3 h-100 no-gutters justify-content-center align-items-center">
         <div class="col-3 col-sm-2 col-lg-1 text-center pl-2">
             <span class="d-block favs">

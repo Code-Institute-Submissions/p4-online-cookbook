@@ -121,10 +121,11 @@ def recipe(recipe_id, username):
     """
     Render the recipe page
     """
+    print(next)
     if username:
-        return render_template("recipe.html", recipe=get_recipe(recipe_id), author=get_recipe_author(recipe_id), user=get_user_by_username(username), user_favs=get_user_favourites_ids(username))
+        return render_template("recipe.html", recipe=get_recipe(recipe_id), author=get_recipe_author(recipe_id), back_to_list=request.args.get('back_to_list'), user=get_user_by_username(username), user_favs=get_user_favourites_ids(username))
     else:
-        return render_template("recipe.html", recipe=get_recipe(recipe_id), author=get_recipe_author(recipe_id))
+        return render_template("recipe.html", recipe=get_recipe(recipe_id), author=get_recipe_author(recipe_id), back_to_list=request.args.get('back_to_list'))
 
 
 @app.route('/dashboard/<username>')
@@ -218,8 +219,8 @@ def add_recipe(recipe_form, username):
             'image_url': recipe_form['image_url'],
             'date_added': datetime.datetime.now().strftime("%Y-%m-%d"),
             'favourites': 0,
-            'cuisine': recipe_form['cuisine'],
-            'type': recipe_form['type']
+            'cuisine': recipe_form['cuisine'].lower(),
+            'type': recipe_form['type'].lower()
         })
     except:
         print("Error adding recipe to database")
@@ -247,8 +248,8 @@ def update_recipe(recipe_id,recipe_form):
             'ingredients': recipe_form['ingredients'].split('\r\n')[:-1],
             'method': recipe_form['method'].split('\r\n')[:-1],
             'image_url': recipe_form['image_url'],
-            'cuisine': recipe_form['cuisine'],
-            'type': recipe_form['type']
+            'cuisine': recipe_form['cuisine'].lower(),
+            'type': recipe_form['type'].lower()
     }})
 
 

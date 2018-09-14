@@ -75,17 +75,17 @@
                     <div class="col-4">
                         <div class="recipe-card-image mx-auto" style="background-image:url({{recipe.image_url}})">
                             {% if user %}
-                            <a class="d-block w-100 h-100" href="/recipe/{{recipe._id}}/{{user.username}}"></a>
+                            <a class="d-block w-100 h-100" href="{{url_for('recipe', recipe_id=recipe._id, username=user.username, back_to_list=request.url)}}"></a>
                             {% else %}
-                            <a class="d-block w-100 h-100" href="/recipe/{{recipe._id}}"></a>
+                            <a class="d-block w-100 h-100" href="{{url_for('recipe', recipe_id=recipe._id, back_to_list=request.url)}}"></a>
                             {% endif %}
                         </div>
                     </div>
                     <div class="col-6 px-2">
                         {% if user %}
-                        <a class="d-block mb-3" href="/recipe/{{recipe._id}}/{{user.username}}"><u>{{recipe.name}}</u></a>
+                        <a class="d-block mb-3" href="{{url_for('recipe', recipe_id=recipe._id, username=user.username, back_to_list=request.url)}}"><u>{{recipe.name}}</u></a>
                         {% else %}
-                        <a class="d-block mb-3" href="/recipe/{{recipe._id}}"><u>{{recipe.name}}</u></a>
+                        <a class="d-block mb-3" href="{{url_for('recipe', recipe_id=recipe._id, back_to_list=request.url)}}"><u>{{recipe.name}}</u></a>
                         {% endif %}
 
                         <i class="fas fa-clock"></i>
