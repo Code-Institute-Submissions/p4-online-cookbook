@@ -211,7 +211,7 @@ def add_recipe(recipe_form, username):
                 'hours': int(recipe_form['hours']),
                 'minutes': int(recipe_form['minutes'])
             },
-            'author': get_user_by_username(username)['_id'],
+            'author': "%s" % get_user_by_username('sarahloh')['_id'],
             'description': recipe_form['description'],
             'ingredients': recipe_form['ingredients'].split('\r\n'),
             'method': recipe_form['method'].split('\r\n'),

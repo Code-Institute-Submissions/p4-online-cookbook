@@ -8,14 +8,20 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-12 col-sm-10 col-md-8 col-lg-6">
-            <form action="{{url_for('add', username=user.username)}}" method="POST">
+            <form class="needs-validation" action="{{url_for('add', username=user.username)}}" method="POST" novalidate>
                 <div class="form-group">
                     <label for="title">Title</label>
-                    <input type="text" class="form-control" id="title" name="name">
+                    <input required type="text" class="form-control" id="title" name="name">
+                    <div class="invalid-feedback">
+                        Please provide a title
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="image_url">Image URL</label>
-                    <input type="text" class="form-control" id="image_url" name="image_url">
+                    <input required type="text" class="form-control" id="image_url" name="image_url">
+                    <div class="invalid-feedback">
+                        Please provide an image url
+                    </div>
                 </div>
                 <div class="form-row">
                     <div class="col-2">
@@ -24,7 +30,8 @@
                     <div class="col col-sm-3 col-md-2">
                         <div class="form-group">
                             <label for="hours">Hours</label>
-                            <select name="hours" class="form-control" id="hours">
+                            <select required name="hours" class="form-control" id="hours">
+                                <option selected value="">-</option>
                                 {% for i in range(0,25) %}
                                 <option>{{i}}</option>
                                 {% endfor %}
@@ -34,7 +41,8 @@
                     <div class="col col-sm-3 col-md-2">
                         <div class="form-group">
                             <label for="minutes">Minutes</label>
-                            <select name="minutes" class="form-control" id="minutes">
+                            <select required name="minutes" class="form-control" id="minutes">
+                                <option selected value="">-</option>
                                 {% for i in range(0,60) %}
                                 <option>{{i}}</option>
                                 {% endfor %}
@@ -44,13 +52,17 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea name="description" class="form-control" id="description" rows="3"></textarea>
+                    <textarea required name="description" class="form-control" id="description" rows="3"></textarea>
+                    <div class="invalid-feedback">
+                        Please provide a description
+                    </div>
                 </div>
                 <div class="form-row">
                     <div class="col">
                         <div class="form-group">
                             <label for="type">Type</label>
-                            <select name="type" class="form-control" id="type">
+                            <select required name="type" class="form-control" id="type">
+                                <option selected value="">Choose...</option>
                                 <option>Starter</option>
                                 <option>Soup</option>
                                 <option>Salad</option>
@@ -63,7 +75,8 @@
                     <div class="col">
                         <div class="form-group">
                             <label for="cuisine">Cuisine</label>
-                            <select name="cuisine" class="form-control" id="cuisine">
+                            <select required name="cuisine" class="form-control" id="cuisine">
+                                <option selected value="">Choose...</option>
                                 <option>Indian</option>
                                 <option>Chinese</option>
                                 <option>Italian</option>
@@ -80,12 +93,18 @@
                 </div>
                 <div class="form-group">
                     <label for="ingredients">Ingredients</label>
-                    <textarea name="ingredients" class="form-control" id="ingredients" rows="6"></textarea>
+                    <textarea required name="ingredients" class="form-control" id="ingredients" rows="6"></textarea>
+                    <div class="invalid-feedback">
+                        Please provide the ingredients
+                    </div>
                     <small class="form-text text-muted">Use a new line for each ingredient</small>
                 </div>
                 <div class="form-group">
                     <label for="method">Method</label>
-                    <textarea name="method" class="form-control" id="method" rows="6"></textarea>
+                    <textarea required name="method" class="form-control" id="method" rows="6"></textarea>
+                    <div class="invalid-feedback">
+                        Please provide the method steps
+                    </div>
                     <small class="form-text text-muted">Use a new line for each step</small>
                 </div>
                 <div class="text-center">
