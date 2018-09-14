@@ -166,7 +166,6 @@ def add(username):
     else:
         recipe_id = add_recipe(request.form, username).inserted_id
         recipe_id = '%s'%recipe_id
-        print(get_recipe(recipe_id))
         add_user_recipe_to_list(get_user_by_username(username)['_id'], 'my_recipes', recipe_id)
         return redirect(url_for('recipe', recipe_id=recipe_id, username=username))
 
@@ -217,7 +216,7 @@ def add_recipe(recipe_form, username):
             'ingredients': recipe_form['ingredients'].split('\r\n'),
             'method': recipe_form['method'].split('\r\n'),
             'image_url': recipe_form['image_url'],
-            'date_added': str(datetime.datetime.now()),
+            'date_added': datetime.datetime.now().strftime("%Y-%m-%d"),
             'favourites': 0,
             'cuisine': recipe_form['cuisine'],
             'type': recipe_form['type']
