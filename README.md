@@ -161,6 +161,9 @@ App available at
 
 ## 7 Database Schema
 
+
+[Project schema designs here](https://github.com/sarahloh/p4-online-cookbook/blob/master/resources/database_schemas)
+
 **Recipe**
 
 ```javascript
@@ -229,31 +232,23 @@ App available at
 8. Setup config variables on heroku dashboard
 
 
-
 ## 10 Features
 
-<!-- In this section, you should go over the different parts of your project, and describe each in a sentence or so.
+In this section, you should go over the different parts of your project, and describe each in a sentence or so.
 
-### Existing Features
-
-- Feature 1 - allows users X to achieve Y, by having them fill out Z
-- ...
-
-For some/all of your features, you may choose to reference the specific project files that implement them, although this is entirely optional.
-
-In addition, you may also use this section to discuss plans for additional features to be implemented in the future:
-
-### Features Left to Implement
-- Another feature idea -->
-
+- Feature 1 - View ordered list - allows users to view recipes ordered by favourites or date added, by clicking on links near the top of the home page
+- Feature 2 - View filtered list - allows users to view recipes using filters, by choosing filter categories at the top of the home page
+- Feature 3 - Add recipe - allows users to add a new recipe, by filling in a form
+- Feature 4 - View recipe - allows users to view a single recipe, by clicking the link on a recipe card on the home page or the manage recipes page
+- Feature 5 - Edit a recipe	- allows users to edit a recipe, by changing the values in a form
+- Feature 6 - Delete a recipe - allows users to delete a recipe, by clicking on the trash icon on the recipe card on the manage recipes page
+- Feature 7 - Create an account - allows users to create an account, by filling in a form
+- Feature 8 - Log in/out - allows users to log out, by clicking log out in the navbar
+- Feature 9 - View a user profile page - allows users to view their profile page, by clicking on manage recipes in the navbar
+- Feature 10 - Favourite a recipe - allows users to favourite a recipe, by clicking on the heart icon on the recipe card
+- Feature 11 - Unfavourite a recipe - allows users to unfavourite a recipe, by clicking on the heart icon on the recipe card
 
 ## 11 Testing
-
-<!-- In this section, you need to convince the assessor that you have conducted enough testing to legitimately believe that the site works well. Essentially, in this part you will want to go over all of your user stories from the UX section and ensure that they all work as intended, with the project providing an easy and straightforward way for the users to achieve their goals.
-
-Whenever it is feasible, prefer to automate your tests, and if you've done so, provide a brief explanation of your approach, link to the test file(s) and explain how to run them. -->
-
----
 
 **Automated Tests**
 
@@ -269,29 +264,38 @@ python3 -m unittest test_cookbook.py
 
 ---
 
-<!-- For any scenarios that have not been automated, test the user stories manually and provide as much detail as is relevant. A particularly useful form for describing your testing process is via scenarios, such as:
-
-1. Contact form:
-    1. Go to the "Contact Us" page
+1. Sign up form:
+    1. Go to the "Sign Up" page
     2. Try to submit the empty form and verify that an error message about the required fields appears
-    3. Try to submit the form with an invalid email address and verify that a relevant error message appears
-    4. Try to submit the form with all inputs valid and verify that a success message appears.
+    3. Try to submit an existing username and verify that an error message appears
+    4. Try to submit the form with all inputs valid and verify that a success message appears on home page.
 
-In addition, you should mention in this section how your project looks and works on different browsers and screen sizes.
+2. Log in form:
+    1. Go to the "Log in form" in navbar or sign up page
+    2. Try to submit the empty form or incorrect username and verify that an error message appears
+    3. Try to submit the form with all inputs valid and verify that a success message appears on home page.
 
-You should also mention in this section any interesting bugs or problems you discovered during your testing, even if you haven't addressed them yet.
+3. Favourite a recipe:
+    1. Try to favourite a recipe when not logged in and verify page redirects to sign up / log in page
 
-If this section grows too long, you may want to split it off into a separate file and link to it from here. -->
 
 ---
 
-<!--
+I used a [Bootstrap](https://getbootstrap.com) grid to structure the frontend and and the site **responsive**. Using mobile first design, I started with the mobile screen and worked up through tablet, desktop and large desktop, altering the layout accordingly.
 
-[**HTML Validator Results**]()
+**Mobile**
 
-[**CSS Validator Results**]()
+- iPhone 5 Safari
+- Chrome Developer Tools
 
+**Tablet**
 
+- Chrome Developer Tools
+
+**Desktop**
+
+- Chrome
+- Safari
 
 
 ## 12 How To Deploy Locally
@@ -304,18 +308,9 @@ $ python3 app.py
 ```
 App available at http://127.0.0.1:5000/
 
- -->
 
 ## 13 Credits
 
-### Content
+### Content & Media
 
-<!-- - The text for section Y was copied from the [Wikipedia article Z](https://en.wikipedia.org/wiki/Z) -->
-
-### Media
-
-<!-- - The photos used in this site were obtained from ... -->
-
-### Acknowledgements
-
-<!-- - I received inspiration for this project from X -->
+Recipe content and media borrowed from [allrecipes.co.uk](http://allrecipes.co.uk)
