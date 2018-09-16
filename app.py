@@ -121,7 +121,6 @@ def recipe(recipe_id, username):
     """
     Render the recipe page
     """
-    print(next)
     if username:
         return render_template("recipe.html", recipe=get_recipe(recipe_id), author=get_recipe_author(recipe_id), back_to_list=request.args.get('back_to_list'), user=get_user_by_username(username), user_favs=get_user_favourites_ids(username))
     else:
@@ -171,6 +170,23 @@ def add(username):
         return redirect(url_for('recipe', recipe_id=recipe_id, username=username))
 
 
+@app.route('/sort', defaults={'username':None})
+@app.route('/sort/<username>')
+def sort(username):
+    """
+    Sort recipes and return to home page
+    """
+    sort_by = request.args.get('sort_by')
+    filters = {
+        'type': request.args.get('type'),
+        'cuisine': request.args.get('cuisine')
+    }
+
+    if username:
+        return render_template("index.html", recipes=get_recipes_by_filters(filters).sort(sort_by, -1), user=get_user_by_username(username), user_favs=get_user_favourites_ids(username), filters=filters)
+    else:
+        return render_template("index.html", recipes=get_recipes_by_filters(filters).sort(sort_by, -1), filters=filters)
+
 # FUNCTIONS
 
 def get_recipe_author(recipe_id):
@@ -191,6 +207,7 @@ def get_recipes_by_filters(filters):
     """
     Read recipes from the database based on filters
     """
+    print('type: %s' % filters['type'])
     if (filters['type'] == 'all' and filters['cuisine'] == 'all'):
         return mongo.db.recipes.find()
     elif filters['type'] == 'all':
