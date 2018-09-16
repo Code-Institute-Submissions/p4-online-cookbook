@@ -207,7 +207,6 @@ def get_recipes_by_filters(filters):
     """
     Read recipes from the database based on filters
     """
-    print('type: %s' % filters['type'])
     if (filters['type'] == 'all' and filters['cuisine'] == 'all'):
         return mongo.db.recipes.find()
     elif filters['type'] == 'all':
