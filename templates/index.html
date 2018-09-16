@@ -41,7 +41,14 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary btn-sm">Apply Filters</button>
+            <div class="row">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary btn-sm">Apply Filters</button>
+                </div>
+                <div class="col">
+                    <p class="text-right">Matching Recipes: {{recipes.count()}}</p>
+                </div>
+            </div>
         </form>
 
 </div>
@@ -50,9 +57,9 @@
     <div class="row mt-4 mx-1">
         <div class="col">
             {% if user %}
-            <p><a href="{{ url_for('sort', username=user.username, sort_by='date_added', type=filters.type, cuisine=filters.cuisine) }}">Date Added</a> | <a href="{{ url_for('sort', username=user.username, sort_by='favourites', type=filters.type, cuisine=filters.cuisine) }}">Most Favourites</a></p>
+            <p class="text-right"><a href="{{ url_for('sort', username=user.username, sort_by='date_added', type=filters.type, cuisine=filters.cuisine) }}">Date Added</a> | <a href="{{ url_for('sort', username=user.username, sort_by='favourites', type=filters.type, cuisine=filters.cuisine) }}">Most Favourites</a></p>
             {% else %}
-            <p><a href="{{ url_for('sort', sort_by='date_added', type=filters.type, cuisine=filters.cuisine) }}">Date Added</a> | <a href="{{ url_for('sort', sort_by='favourites', type=filters.type, cuisine=filters.cuisine) }}">Most Favourites</a></p>
+            <p class="text-right"><a href="{{ url_for('sort', sort_by='date_added', type=filters.type, cuisine=filters.cuisine) }}">Date Added</a> | <a href="{{ url_for('sort', sort_by='favourites', type=filters.type, cuisine=filters.cuisine) }}">Most Favourites</a></p>
             {% endif %}
         </div>
     </div>
